@@ -13,16 +13,20 @@ export default function SmoothScroll() {
       smoothWheel: true,
       smoothTouch: false,
       syncTouch: false,
+      autoRaf: false,
     });
+    let animationFrameId;
 
     function raf(time) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      animationFrameId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    lenis.start();
+    animationFrameId = requestAnimationFrame(raf);
 
     return () => {
+      cancelAnimationFrame(animationFrameId);
       lenis.destroy();
     };
   }, []);

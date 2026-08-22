@@ -50,23 +50,23 @@ export default function HeroSection() {
 
       <div className="flex-1 flex flex-col justify-center px-6 sm:px-12 max-w-5xl mx-auto w-full pt-32 pb-16">
         <div className="space-y-6">
-          <p className="hero-sub text-xs font-mono text-ink-muted tracking-[0.2em] uppercase">
+          <p className="hero-sub text-xs font-mono text-ink-muted tracking-[0.2em] uppercase opacity-0">
             Frontend Developer
           </p>
 
           <div ref={linesRef} className="space-y-1">
-            <h1 className="font-sans font-medium text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.85] tracking-[-0.05em] text-ink">
+            <h1 className="font-sans font-medium text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.85] tracking-[-0.05em] text-ink opacity-0">
               Crafting digital
             </h1>
-            <h1 className="font-sans font-medium text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.85] tracking-[-0.05em] text-ink">
+            <h1 className="font-sans font-medium text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.85] tracking-[-0.05em] text-ink opacity-0">
               experiences
             </h1>
-            <h1 className="font-sans font-medium text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.85] tracking-[-0.05em] text-ink">
+            <h1 className="font-sans font-medium text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.85] tracking-[-0.05em] text-ink opacity-0">
               with care
             </h1>
           </div>
 
-          <p className="hero-sub text-base sm:text-lg text-ink-muted max-w-lg leading-relaxed pt-4 tracking-[-0.01em]">
+          <p className="hero-sub text-base sm:text-lg text-ink-muted max-w-lg leading-relaxed pt-4 tracking-[-0.01em] opacity-0">
             I build modern, performant web applications with React, Next.js, and
             Tailwind CSS. Currently at Nanolix Digital and Techriv.
           </p>
@@ -74,7 +74,7 @@ export default function HeroSection() {
           <div className="flex flex-col sm:flex-row items-start gap-4 pt-4">
             <a
               href="#projects"
-              className="hero-cta group inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-ink text-black text-sm font-medium transition-all hover:opacity-90"
+              className="hero-cta group inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-ink text-black text-sm font-medium transition-all hover:opacity-90 opacity-0"
             >
               See my work
               <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,7 +83,7 @@ export default function HeroSection() {
             </a>
             <a
               href="#contact"
-              className="hero-cta inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-surface-1 text-ink text-sm font-medium hover:bg-surface-2 transition-all"
+              className="hero-cta inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-surface-1 text-ink text-sm font-medium hover:bg-surface-2 transition-all opacity-0"
             >
               Get in touch
             </a>

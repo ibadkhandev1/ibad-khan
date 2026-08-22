@@ -90,4 +90,14 @@ export const BLOG_POSTS = [
     date: '2024-07-25',
     keywords: ['gsap', 'animations', 'javascript', 'web development'],
   },
+  {
+    id: 'state-management',
+    title: 'State Management in React: Context API vs Redux vs Zustand',
+    slug: 'state-management-react-context-api-redux-zustand',
+    excerpt: 'Compare popular state management solutions for React applications. Learn when to use Context API, Redux, or Zustand, and best practices for each.',
+    category: 'React',
+    readTime: 13,
+    date: '2024-07-20',
+    keywords: ['state management', 'react', 'context api', 'redux', 'zustand'],
+  },
 ];

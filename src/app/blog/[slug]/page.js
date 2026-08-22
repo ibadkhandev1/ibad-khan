@@ -2,6 +2,8 @@ import { BLOG_POSTS } from '@/config/seo';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import FadeContent from '@/components/ui/FadeContent';
+import ReactMarkdown from 'react-markdown';
+import { use } from 'react';
 
 // Generate static params for all blog posts
 export function generateStaticParams() {
@@ -11,8 +13,9 @@ export function generateStaticParams() {
 }
 
 // Generate metadata for each blog post
-export function generateMetadata({ params }) {
-  const post = BLOG_POSTS.find((p) => p.slug === params.slug);
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const post = BLOG_POSTS.find((p) => p.slug === slug);
 
   if (!post) {
     return {
@@ -498,10 +501,190 @@ function AnimatedBox() {
 
 GSAP empowers you to create engaging, smooth animations that enhance user experience. With proper implementation, animations can make your website feel polished and professional.`,
   },
+  'state-management-react-context-api-redux-zustand': {
+    content: `Managing application state is one of the most critical aspects of building scalable React applications. Choosing the right state management solution can significantly impact your development experience and application performance. In this article, we'll compare the most popular options.
+
+## Understanding State Management
+
+State management involves handling data that changes over time and sharing it across different parts of your application. Without proper state management, applications become difficult to maintain and debug as they grow.
+
+### Why State Management Matters:
+- **Single Source of Truth**: Keep data in one place
+- **Predictability**: Understand how state changes
+- **Scalability**: Handle complex applications easily
+- **Testability**: Easier to test state changes
+
+## Context API
+
+The Context API is React's built-in solution for managing state without external libraries.
+
+### Pros:
+- Built into React, no dependencies
+- Great for small to medium applications
+- Minimal setup required
+- Good for theme/authentication state
+
+### Cons:
+- Can cause unnecessary re-renders
+- Not ideal for frequently changing state
+- Boilerplate code increases with complexity
+
+### Example:
+
+\`\`\`jsx
+import React, { createContext, useState } from 'react';
+
+const ThemeContext = createContext();
+
+export function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState('light');
+
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+// Usage
+function MyComponent() {
+  const { theme, setTheme } = useContext(ThemeContext);
+  return <button onClick={() => setTheme('dark')}>Toggle</button>;
+}
+\`\`\`
+
+## Redux
+
+Redux is a predictable state container that enforces strict patterns and centralized state management.
+
+### Pros:
+- Highly predictable and structured
+- Excellent for large applications
+- Time-travel debugging capabilities
+- Rich ecosystem and tooling
+- Strict unidirectional data flow
+
+### Cons:
+- Steep learning curve
+- Significant boilerplate code
+- Overkill for simple applications
+- Requires middleware for side effects
+
+### Core Concepts:
+- **Store**: Single source of truth
+- **Actions**: Describe what happened
+- **Reducers**: Specify how state changes
+- **Middleware**: Handle side effects
+
+## Zustand
+
+Zustand is a lightweight, modern state management library that combines the simplicity of Context API with Redux's power.
+
+### Pros:
+- Minimal boilerplate
+- Lightweight (2KB)
+- Easy learning curve
+- Great performance
+- TypeScript support out of the box
+
+### Cons:
+- Smaller ecosystem than Redux
+- Fewer debugging tools
+- Less suitable for very large apps
+- Newer library with less community
+
+### Example:
+
+\`\`\`jsx
+import create from 'zustand';
+
+const useStore = create((set) => ({
+  count: 0,
+  increment: () => set((state) => ({ count: state.count + 1 })),
+  decrement: () => set((state) => ({ count: state.count - 1 })),
+}));
+
+// Usage
+function Counter() {
+  const count = useStore((state) => state.count);
+  const increment = useStore((state) => state.increment);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={increment}>+</button>
+    </div>
+  );
+}
+\`\`\`
+
+## Comparison Table
+
+| Feature | Context API | Redux | Zustand |
+|---------|------------|-------|---------|
+| Bundle Size | ~0KB | ~5KB | ~2KB |
+| Learning Curve | Easy | Steep | Easy |
+| Boilerplate | Medium | High | Low |
+| Performance | Good | Excellent | Excellent |
+| Debugging | Basic | Excellent | Good |
+| Scalability | Medium | Excellent | Good |
+| Dev Tools | None | Excellent | Basic |
+
+## When to Use Each
+
+### Context API:
+- Small to medium applications
+- Global theme or authentication state
+- Simple state that doesn't change frequently
+- Want to avoid external dependencies
+
+### Redux:
+- Large, complex applications
+- Complex state with many interactions
+- Need time-travel debugging
+- Team familiar with Redux patterns
+- Building enterprise applications
+
+### Zustand:
+- Modern applications
+- Want simplicity without Redux complexity
+- Performance-critical applications
+- Teams that value minimal boilerplate
+- Projects that need to scale gradually
+
+## Best Practices
+
+1. **Keep state close to where it's used**
+2. **Normalize your state structure**
+3. **Use selectors to access state**
+4. **Handle async operations properly**
+5. **Document your state structure**
+6. **Profile and optimize performance**
+
+## Migration Strategies
+
+If you're currently using Context API and need to scale:
+1. Start with Zustand - easier migration than Redux
+2. Keep Context API for local component state
+3. Use Zustand for global application state
+4. Gradually refactor as needed
+
+## Performance Considerations
+
+- Zustand has the best performance by default
+- Redux requires proper selector usage to avoid re-renders
+- Context API can cause unnecessary re-renders if not structured carefully
+- Use profiling tools to identify bottlenecks
+
+## Conclusion
+
+There's no one-size-fits-all solution for state management. The best choice depends on your application size, complexity, and team preferences. Start simple with Context API, scale to Zustand as you grow, and consider Redux only when you have genuine complexity that justifies its overhead. The most important is choosing a solution you and your team are comfortable with and that matches your application's needs.`,
+  },
 };
 
 export default function BlogPostPage({ params }) {
-  const post = BLOG_POSTS.find((p) => p.slug === params.slug);
+  const { slug } = use(params);
+  const post = BLOG_POSTS.find((p) => p.slug === slug);
 
   if (!post) {
     return (
@@ -526,8 +709,11 @@ export default function BlogPostPage({ params }) {
       <article className="py-24 sm:py-32 px-6 sm:px-12 pt-32 border-b border-hairline">
         <div className="max-w-3xl mx-auto">
           <FadeContent blur>
-            <Link href="/blog" className="text-sm text-accent-blue hover:text-accent-blue/80 transition-colors mb-6 inline-block">
-              ← Back to Blog
+            <Link href="/blog" className="text-sm text-accent-blue hover:text-accent-blue/80 transition-colors mb-6 inline-flex items-center gap-1">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
+              </svg>
+              Back to Blog
             </Link>
           </FadeContent>
 
@@ -563,10 +749,65 @@ export default function BlogPostPage({ params }) {
 
       {/* Article Content */}
       <section className="py-12 sm:py-16 px-6 sm:px-12">
-        <div className="max-w-3xl mx-auto prose prose-invert max-w-none">
-          <div className="text-ink leading-relaxed whitespace-pre-wrap">
+        <div className="max-w-3xl mx-auto">
+          <ReactMarkdown
+            components={{
+              h2: ({ children }) => (
+                <h2 className="mt-12 mb-4 text-2xl sm:text-3xl font-semibold leading-tight text-ink">
+                  {children}
+                </h2>
+              ),
+              h3: ({ children }) => (
+                <h3 className="mt-8 mb-3 text-xl sm:text-2xl font-semibold leading-tight text-ink">
+                  {children}
+                </h3>
+              ),
+              p: ({ children }) => (
+                <p className="mb-6 text-base sm:text-lg leading-8 text-ink-muted">
+                  {children}
+                </p>
+              ),
+              ul: ({ children }) => (
+                <ul className="mb-6 list-disc space-y-2 pl-6 text-base sm:text-lg leading-8 text-ink-muted">
+                  {children}
+                </ul>
+              ),
+              ol: ({ children }) => (
+                <ol className="mb-6 list-decimal space-y-2 pl-6 text-base sm:text-lg leading-8 text-ink-muted">
+                  {children}
+                </ol>
+              ),
+              li: ({ children }) => <li className="pl-2">{children}</li>,
+              strong: ({ children }) => <strong className="font-semibold text-ink">{children}</strong>,
+              code: ({ className, children, ...props }) => {
+                const isBlock = className?.startsWith('language-');
+
+                return isBlock ? (
+                  <code
+                    className="block overflow-x-auto rounded-lg bg-surface-1 p-4 text-sm leading-6 text-ink"
+                    {...props}
+                  >
+                    {children}
+                  </code>
+                ) : (
+                  <code className="rounded bg-surface-1 px-1.5 py-0.5 font-mono text-[0.9em] text-accent-blue" {...props}>
+                    {children}
+                  </code>
+                );
+              },
+              pre: ({ children }) => <pre className="mb-6 overflow-x-auto">{children}</pre>,
+              a: ({ href, children }) => (
+                <a
+                  href={href}
+                  className="text-accent-blue underline decoration-accent-blue/40 underline-offset-4 hover:decoration-accent-blue"
+                >
+                  {children}
+                </a>
+              ),
+            }}
+          >
             {content?.content || 'Content coming soon...'}
-          </div>
+          </ReactMarkdown>
         </div>
       </section>
 
@@ -590,10 +831,10 @@ export default function BlogPostPage({ params }) {
               href="/#contact"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-ink text-black text-sm font-medium hover:opacity-90 transition-all"
             >
-              Get in Touch
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
+              Get in Touch
             </Link>
           </FadeContent>
         </div>
