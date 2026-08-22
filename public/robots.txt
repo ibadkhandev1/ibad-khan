@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /*.json$
+Disallow: /*?*sort=
+
+Sitemap: https://ibad-khan.vercel.app/sitemap.xml
+
+# Crawl delay in seconds (optional, if needed)
+Crawl-delay: 1

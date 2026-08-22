@@ -2,13 +2,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { motion } from 'motion/react';
-
-const navItems = [
-  { label: 'Work', href: '#projects' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
-];
+import Navbar from '@/components/Navbar';
 
 export default function HeroSection() {
   const containerRef = useRef(null);
@@ -44,11 +38,7 @@ export default function HeroSection() {
         { y: 0, opacity: 1, duration: 0.8, delay: 1.1, stagger: 0.1, ease: 'power3.out' }
       );
 
-      gsap.fromTo(
-        '.hero-nav',
-        { y: -20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }
-      );
+
     }, containerRef);
 
     return () => ctx.revert();
@@ -56,27 +46,7 @@ export default function HeroSection() {
 
   return (
     <section ref={containerRef} className="relative min-h-dvh flex flex-col">
-      <nav className="hero-nav fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 sm:px-12 py-6 backdrop-blur-sm bg-canvas/70">
-        <span className="font-mono text-sm tracking-tight text-ink-muted">ibad khan</span>
-        <div className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              className="text-sm text-ink-muted hover:text-ink transition-colors relative group"
-            >
-              {item.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-accent-blue transition-all duration-300 group-hover:w-full" />
-            </a>
-          ))}
-        </div>
-        <a
-          href="#contact"
-          className="text-sm px-5 py-2.5 rounded-full bg-ink text-black font-medium hover:opacity-90 transition-opacity"
-        >
-          Reach out
-        </a>
-      </nav>
+      <Navbar />
 
       <div className="flex-1 flex flex-col justify-center px-6 sm:px-12 max-w-5xl mx-auto w-full pt-32 pb-16">
         <div className="space-y-6">
