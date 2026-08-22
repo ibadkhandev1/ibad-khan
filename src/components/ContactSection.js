@@ -1,4 +1,5 @@
 'use client';
+import { PERSONAL_INFO, SOCIAL_LINKS } from '@/config/personal';
 import FadeContent from '@/components/ui/FadeContent';
 
 export default function ContactSection() {
@@ -28,7 +29,7 @@ export default function ContactSection() {
           <FadeContent delay={0.3}>
             <div className="space-y-3">
               <a
-                href="mailto:ibad55252@gmail.com"
+                href={`mailto:${PERSONAL_INFO.email}`}
                 className="group inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-ink text-black text-sm font-medium transition-all hover:opacity-90"
               >
                 Send a message
@@ -42,9 +43,9 @@ export default function ContactSection() {
           <FadeContent delay={0.4}>
             <div className="flex items-center gap-5 mt-10">
               {[
-                { href: 'https://github.com/ibadkhan55252', label: 'GitHub' },
-                { href: 'https://www.linkedin.com/in/ibadkhan55252', label: 'LinkedIn' },
-                { href: 'mailto:ibad55252@gmail.com', label: 'Email' },
+                { href: SOCIAL_LINKS.github, label: 'GitHub' },
+                { href: SOCIAL_LINKS.linkedin, label: 'LinkedIn' },
+                { href: SOCIAL_LINKS.email, label: 'Email' },
               ].map(({ href, label }) => (
                 <a
                   key={label}

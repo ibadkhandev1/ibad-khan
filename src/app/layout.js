@@ -1,5 +1,6 @@
 import { Inter, Geist_Mono } from "next/font/google";
 import JsonLd from "@/components/JsonLd";
+import SmoothScroll from "@/components/SmoothScroll";
 import "./globals.css";
 
 const inter = Inter({
@@ -81,6 +82,7 @@ export default function RootLayout({ children }) {
       className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-canvas text-ink" style={{ fontVariationSettings: "'cv01' 1, 'cv05' 1, 'cv09' 1, 'cv11' 1, 'ss03' 1, 'ss07' 1, 'dlig' 1" }}>
+        <SmoothScroll />
         <JsonLd />
         {children}
       </body>

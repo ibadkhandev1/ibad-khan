@@ -3,9 +3,9 @@ import FadeContent from '@/components/ui/FadeContent';
 
 const infoRows = [
   { label: 'Based in', value: 'Hyderabad, Pakistan' },
-  { label: 'Experience', value: '2+ years' },
+  { label: 'Experience', value: '2.5+ years' },
   { label: 'Currently at', value: 'Nanolix Digital & Techriv' },
-  { label: 'Email', value: 'ibad55252@gmail.com' },
+  { label: 'Email', value: 'ibadkhan.dev@gmail.com' },
   { label: 'Phone', value: '+92 340 8575895' },
 ];
 

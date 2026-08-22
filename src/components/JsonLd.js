@@ -1,37 +1,27 @@
-const BASE_URL = process.env.SITE_URL || 'https://ibad-khan.vercel.app';
+import { PERSONAL_INFO, SOCIAL_LINKS, ORGANIZATIONS } from '@/config/personal';
 
 export default function JsonLd() {
   const person = {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: 'Ibad Khan',
-    givenName: 'Ibad',
-    familyName: 'Khan',
-    url: BASE_URL,
-    jobTitle: 'Frontend Developer',
-    worksFor: [
-      {
-        '@type': 'Organization',
-        name: 'Techriv',
-      },
-      {
-        '@type': 'Organization',
-        name: 'Nanolix Digital',
-      },
-    ],
-    sameAs: [
-      'https://github.com/ibadkhan55252',
-      'https://www.linkedin.com/in/ibadkhan55252',
-    ],
+    name: PERSONAL_INFO.name,
+    givenName: PERSONAL_INFO.givenName,
+    familyName: PERSONAL_INFO.familyName,
+    url: PERSONAL_INFO.siteUrl,
+    jobTitle: PERSONAL_INFO.jobTitle,
+    worksFor: ORGANIZATIONS.map((org) => ({
+      '@type': 'Organization',
+      name: org.name,
+    })),
+    sameAs: Object.values(SOCIAL_LINKS),
   };
 
   const website = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Ibad Khan | Frontend Developer',
-    url: BASE_URL,
-    description:
-      'Frontend developer building modern, performant web experiences with React, Next.js, and Tailwind CSS.',
+    name: `${PERSONAL_INFO.name} | ${PERSONAL_INFO.jobTitle}`,
+    url: PERSONAL_INFO.siteUrl,
+    description: PERSONAL_INFO.description,
   };
 
   return (

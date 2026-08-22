@@ -1,5 +1,6 @@
 'use client';
 import { motion } from 'motion/react';
+import { SOCIAL_LINKS } from '@/config/personal';
 import FadeContent from '@/components/ui/FadeContent';
 import SpotlightCard from '@/components/ui/SpotlightCard';
 import GlareHover from '@/components/ui/GlareHover';
@@ -10,19 +11,19 @@ const PROJECTS = [
     title: 'Landify',
     description: 'A modern landing page with smooth GSAP animations and clean UI patterns.',
     tech: ['React', 'Tailwind', 'GSAP'],
-    href: 'https://github.com/ibadkhan55252/Landify',
+    href: `${SOCIAL_LINKS.github}/Landify`,
   },
   {
     title: 'heroUI',
     description: 'Reusable hero section components with varied animation patterns for Next.js.',
     tech: ['Next.js', 'Tailwind', 'Motion'],
-    href: 'https://github.com/ibadkhan55252/heroUI',
+    href: `${SOCIAL_LINKS.github}/heroUI`,
   },
   {
     title: 'Codelace Redesign',
     description: 'Full platform redesign focused on UX, modern aesthetics, and responsiveness.',
     tech: ['React', 'CSS', 'Figma'],
-    href: 'https://github.com/ibadkhan55252/Codelace-redesign',
+    href: `${SOCIAL_LINKS.github}/Codelace-redesign`,
     gradient: true,
     gradientVariant: 'violet',
   },
@@ -30,7 +31,7 @@ const PROJECTS = [
     title: 'Weather API App',
     description: 'Real-time weather dashboard using OpenWeatherMap API with dynamic theming.',
     tech: ['JavaScript', 'API', 'CSS'],
-    href: 'https://github.com/ibadkhan55252/weatherAPI',
+    href: `${SOCIAL_LINKS.github}/weatherAPI`,
   },
 ];
 
@@ -116,7 +117,7 @@ export default function ProjectsSection() {
         <div className="flex justify-center mt-10">
           <FadeContent delay={0.4}>
             <a
-              href="https://github.com/ibadkhan55252"
+              href={SOCIAL_LINKS.github}
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-2 text-sm text-ink-muted hover:text-accent-blue transition-colors"
