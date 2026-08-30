@@ -1,6 +1,6 @@
 import { BLOG_POSTS } from '@/config/seo';
+import { BASE_URL } from './constants';
 
-const BASE_URL = process.env.SITE_URL;
 
 export default function sitemap() {
   return [

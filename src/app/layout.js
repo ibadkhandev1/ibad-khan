@@ -2,6 +2,7 @@ import { Inter, Geist_Mono } from "next/font/google";
 import JsonLd from "@/components/JsonLd";
 import SmoothScroll from "@/components/SmoothScroll";
 import "./globals.css";
+import { BASE_URL } from "./constants";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -14,7 +15,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const BASE_URL = process.env.SITE_URL || 'https://ibad-khan.vercel.app';
+
 
 export const metadata = {
   metadataBase: new URL(BASE_URL),

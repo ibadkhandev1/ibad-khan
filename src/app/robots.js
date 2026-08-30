@@ -1,4 +1,4 @@
-const BASE_URL = process.env.SITE_URL;
+import { BASE_URL } from "./constants";
 
 export default function robots() {
   return {

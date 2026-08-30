@@ -1,14 +1,12 @@
+import { BASE_URL } from '@/app/constants';
 import { PERSONAL_INFO, SOCIAL_LINKS, ORGANIZATIONS } from '@/config/personal';
 
 export default function JsonLd() {
-  const BASE_URL = process.env.SITE_URL || 'https://ibad-khan.vercel.app';
 
   const person = {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: PERSONAL_INFO.name,
-    givenName: PERSONAL_INFO.givenName,
-    familyName: PERSONAL_INFO.familyName,
     url: PERSONAL_INFO.siteUrl,
     jobTitle: PERSONAL_INFO.jobTitle,
     description: PERSONAL_INFO.description,
