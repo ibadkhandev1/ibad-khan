@@ -8,6 +8,27 @@ import GradientSpotlightCard from '@/components/ui/GradientSpotlightCard';
 
 const PROJECTS = [
   {
+    title: 'AI Fitness Coach',
+    description:
+      'A full-stack AI fitness platform with personalized plans, habit tracking, coach chat, and progress insights.',
+    tech: ['Next.js', 'MongoDB', 'AI SDK'],
+    href: `${SOCIAL_LINKS.github}/liquad-assests`,
+  },
+  {
+    title: 'Power AI',
+    description:
+      'A full-screen AI product landing page with a video background, liquid-glass UI, and animated brand marquee.',
+    tech: ['React', 'TypeScript', 'Tailwind'],
+    href: `${SOCIAL_LINKS.github}/power-ai`,
+  },
+  {
+    title: 'Securify',
+    description:
+      'A security-focused web application built with a modern TypeScript frontend and production-ready Next.js patterns.',
+    tech: ['Next.js', 'TypeScript', 'Tailwind'],
+    href: `${SOCIAL_LINKS.github}/securify`,
+  },
+  {
     title: 'Landify',
     description: 'A modern landing page with smooth GSAP animations and clean UI patterns.',
     tech: ['React', 'Tailwind', 'GSAP'],
