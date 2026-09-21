@@ -33,6 +33,9 @@ export const metadata = {
   ],
   authors: [{ name: "Ibad Khan" }],
   creator: "Ibad Khan",
+  icons: {
+    icon: "/ibad-fav.svg",
+  },
   verification: {
     google: "googlec5f414645987388e.html",
   },
