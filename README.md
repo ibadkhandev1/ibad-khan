@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Ibad Khan — Portfolio
 
-## Getting Started
+Personal site of Ibad Khan, frontend developer. Built around one idea: **design on the
+surface, engineering underneath.** A cursor lens reveals the blueprint (grid, outlined
+type, real CSS values) under the finished hero.
 
-First, run the development server:
+Next.js 16 (App Router) · React 19 · GSAP · Lenis · OGL (WebGL) · Tailwind CSS v4
+
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build && npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Environment variables
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+| Variable | Required | What it does |
+|---|---|---|
+| `NEXT_PUBLIC_CAL_LINK` | No | Overrides the Cal.com event (default `ibad-khaan/15min`). "Book a call" buttons open Cal.com's own popup. |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Where to edit content
 
-## Learn More
+| What | File |
+|---|---|
+| Projects, experience, stats, toolkit, menu | `src/config/content.js` |
+| Service pages (copy, FAQ, SEO titles/descriptions) | `src/config/services.js` |
+| Name, email, social links | `src/config/personal.js` |
+| Chat greeting and suggestions | `src/lib/chat.js` (`CHAT_CONFIG`) |
+| Chat backend | `src/lib/chat.js` → `sendChatMessage()` |
+| Resume PDF | `public/ibad-khan-resume.pdf` (download name set in `RESUME` in `personal.js`) |
 
-To learn more about Next.js, take a look at the following resources:
+### Connecting the chat
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`sendChatMessage(messages)` receives `[{ role, content }]` and must return the reply
+string. It currently returns a placeholder. Replace it with a call to your own route
+(e.g. `POST /api/chat`); the comment in the file shows the shape.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Architecture
 
-## Deploy on Vercel
+```
+src/
+  app/                 routes, layout (fonts, metadata, providers), template (route-in)
+    services/[slug]/   one static, SEO-optimised page per service
+  lib/                 gsap setup, lenis, motion tokens, lens, intro signal, cal, chat
+  components/
+    layout/            Header, Menu, Footer, Cursor, Preloader, page transitions
+    motion/            SplitReveal, Magnetic, Marquee, Counter
+    sections/          Hero, Manifesto, Work, Principles, Experience, Services, Stack
+    webgl/             SignalField (OGL contour shader)
+    booking/           BookCallButton (loads Cal.com on hover/focus, opens its popup)
+    chat/              ChatWidget
+docs/                  COMMIT_SHEET.md, QA_REPORT.md
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Every animation lives in `useGSAP` inside `gsap.matchMedia()`, so it reverts on unmount and
+has a reduced-motion fallback. Content is server-rendered and never hidden by CSS.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy
+
+Push to GitHub and import the repo in Vercel. Add the environment variables above in
+the Vercel project settings.
+
+## Awwwards submission blurb
+
+**Title:** Ibad Khan — Frontend Developer
+
+**Description:** A portfolio built on one idea: design on the surface, engineering
+underneath. An X-ray lens follows the cursor and reveals the blueprint of the page,
+including grid, outlined type and the CSS that produced it, over a live WebGL contour
+field.
+
+**Tech:** Next.js, React, GSAP, ScrollTrigger, SplitText, Lenis, WebGL (OGL), Tailwind CSS
+
+**Highlights:** X-ray cursor lens · pinned horizontal work reel with velocity skew ·
+curtain page transitions

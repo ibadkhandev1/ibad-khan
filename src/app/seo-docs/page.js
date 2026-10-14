@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/layout/TransitionLink';
 
 export const metadata = {
   robots: 'noindex, nofollow',

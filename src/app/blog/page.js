@@ -1,6 +1,5 @@
 import { BLOG_POSTS } from '@/config/seo';
-import Link from 'next/link';
-import Navbar from '@/components/Navbar';
+import Link from '@/components/layout/TransitionLink';
 import FadeContent from '@/components/ui/FadeContent';
 
 export const metadata = {
@@ -18,7 +17,6 @@ export const metadata = {
 export default function BlogPage() {
   return (
     <>
-      <Navbar />
       {/* Hero Section */}
       <section className="py-24 sm:py-32 px-6 sm:px-12 pt-32">
         <div className="max-w-5xl mx-auto">

@@ -24,3 +24,8 @@ export const ORGANIZATIONS = [
     name: 'Nanolix Digital',
   },
 ];
+
+export const RESUME = {
+  href: '/ibad-khan-resume.pdf',
+  fileName: 'Ibad-Khan-Resume.pdf',
+};

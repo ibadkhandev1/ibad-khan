@@ -1,6 +1,5 @@
 import { BLOG_POSTS } from '@/config/seo';
-import Link from 'next/link';
-import Navbar from '@/components/Navbar';
+import Link from '@/components/layout/TransitionLink';
 import FadeContent from '@/components/ui/FadeContent';
 import ReactMarkdown from 'react-markdown';
 import { use } from 'react';
@@ -691,7 +690,7 @@ export default function BlogPostPage({ params }) {
       <section className="py-24 sm:py-32 px-6 sm:px-12">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl font-bold mb-4 text-ink">Article Not Found</h1>
-          <p className="text-ink-muted mb-8">The article you're looking for doesn't exist.</p>
+          <p className="text-ink-muted mb-8">The article you&apos;re looking for doesn&apos;t exist.</p>
           <Link href="/blog" className="text-accent-blue hover:text-accent-blue/80 transition-colors">
             ← Back to Blog
           </Link>
@@ -704,7 +703,6 @@ export default function BlogPostPage({ params }) {
 
   return (
     <>
-      <Navbar />
       {/* Article Header */}
       <article className="py-24 sm:py-32 px-6 sm:px-12 pt-32 border-b border-hairline">
         <div className="max-w-3xl mx-auto">
@@ -822,7 +820,7 @@ export default function BlogPostPage({ params }) {
 
           <FadeContent delay={0.1} blur>
             <p className="text-[15px] text-ink-muted leading-relaxed mb-8">
-              If you're interested in discussing web development, design, or want to collaborate on a project, let's connect.
+              If you&apos;re interested in discussing web development, design, or want to collaborate on a project, let&apos;s connect.
             </p>
           </FadeContent>
 

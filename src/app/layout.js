@@ -1,95 +1,109 @@
-import { Inter, Geist_Mono } from "next/font/google";
-import JsonLd from "@/components/JsonLd";
-import SmoothScroll from "@/components/SmoothScroll";
-import "./globals.css";
-import { BASE_URL } from "./constants";
+import { Bricolage_Grotesque, Inter, JetBrains_Mono } from 'next/font/google'
+import 'lenis/dist/lenis.css'
+import './globals.css'
+import { BASE_URL } from './constants'
+import JsonLd from '@/components/JsonLd'
+import { SmoothScroll } from '@/lib/lenis'
+import TransitionProvider from '@/components/layout/TransitionProvider'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
+import Cursor from '@/components/layout/Cursor'
+import Preloader from '@/components/layout/Preloader'
+import ChatWidget from '@/components/chat/ChatWidget'
+
+const display = Bricolage_Grotesque({
+  variable: '--font-bricolage',
+  subsets: ['latin'],
+  axes: ['wdth', 'opsz'],
+  display: 'swap',
+})
 
 const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
+  variable: '--font-inter',
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+})
 
-const geistMono = Geist_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-});
+const mono = JetBrains_Mono({
+  variable: '--font-jetbrains-mono',
+  subsets: ['latin'],
+  display: 'swap',
+})
 
-
+const TITLE = 'Ibad Khan | Frontend Developer'
+const DESCRIPTION =
+  'Frontend developer building modern, performant web experiences with React, Next.js, '
+  + 'and Tailwind CSS. Based in Hyderabad.'
+const OG_IMAGE = `${BASE_URL}/featured-image.jpg`
 
 export const metadata = {
   metadataBase: new URL(BASE_URL),
-  title: "Ibad Khan | Frontend Developer",
-  description:
-    "Frontend developer building modern, performant web experiences with React, Next.js, and Tailwind CSS. Based in Hyderabad.",
+  title: TITLE,
+  description: DESCRIPTION,
   keywords: [
-    "frontend developer",
-    "react developer",
-    "next.js",
-    "web developer",
-    "portfolio",
-    "ibad khan",
-    "hyderabad",
+    'frontend developer',
+    'react developer',
+    'next.js',
+    'creative developer',
+    'gsap',
+    'web developer',
+    'portfolio',
+    'ibad khan',
+    'hyderabad',
   ],
-  authors: [{ name: "Ibad Khan" }],
-  creator: "Ibad Khan",
-  icons: {
-    icon: "/ibad-fav.svg",
-  },
-  verification: {
-    google: "googlec5f414645987388e.html",
-  },
+  authors: [{ name: 'Ibad Khan' }],
+  creator: 'Ibad Khan',
+  icons: { icon: '/ibad-fav.svg' },
+  verification: { google: 'googlec5f414645987388e.html' },
   openGraph: {
-    title: "Ibad Khan | Frontend Developer",
-    description:
-      "Frontend developer building modern, performant web experiences with React, Next.js, and Tailwind CSS.",
+    title: TITLE,
+    description: DESCRIPTION,
     url: BASE_URL,
-    siteName: "Ibad Khan Portfolio",
-    locale: "en_US",
-    type: "website",
-  },
-  openGraph: {
-    title: "Ibad Khan | Frontend Developer",
-    description:
-      "Frontend developer building modern, performant web experiences with React, Next.js, and Tailwind CSS.",
-    url: BASE_URL,
-    siteName: "Ibad Khan Portfolio",
-    locale: "en_US",
-    type: "website",
-    images: [
-      {
-        url: `${BASE_URL}/featured-image.jpg`,
-        alt: "Ibad Khan portfolio preview image",
-      },
-    ],
+    siteName: 'Ibad Khan Portfolio',
+    locale: 'en_US',
+    type: 'website',
+    images: [{ url: OG_IMAGE, alt: 'Ibad Khan portfolio preview image' }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Ibad Khan | Frontend Developer",
-    description:
-      "Frontend developer building modern, performant web experiences with React, Next.js, and Tailwind CSS.",
-    images: [`${BASE_URL}/featured-image.jpg`],
+    card: 'summary_large_image',
+    title: TITLE,
+    description: DESCRIPTION,
+    images: [OG_IMAGE],
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  alternates: {
-    canonical: BASE_URL,
-  },
-};
+  robots: { index: true, follow: true },
+  alternates: { canonical: BASE_URL },
+}
+
+export const viewport = {
+  themeColor: '#0b0b0a',
+  colorScheme: 'dark',
+}
 
 export default function RootLayout({ children }) {
+  const fontVars = `${display.variable} ${inter.variable} ${mono.variable}`
+
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full bg-canvas text-ink" style={{ fontVariationSettings: "'cv01' 1, 'cv05' 1, 'cv09' 1, 'cv11' 1, 'ss03' 1, 'ss07' 1, 'dlig' 1" }}>
+    <html lang="en" className={`${fontVars} is-loading antialiased`}>
+      <body>
+        <noscript>
+          <style>{'.preloader{display:none!important}html.is-loading{overflow:auto}'}</style>
+        </noscript>
+        <a href="#main" className="skip-link">Skip to content</a>
         <SmoothScroll />
+        <TransitionProvider>
+          <Header />
+          <main id="main" tabIndex={-1} className="outline-none">
+            {children}
+          </main>
+          <Footer />
+          <ChatWidget />
+        </TransitionProvider>
+        <Cursor />
+        <Preloader />
+        <div className="grain" aria-hidden="true" />
         <JsonLd />
-        {children}
       </body>
     </html>
-  );
+  )
 }
