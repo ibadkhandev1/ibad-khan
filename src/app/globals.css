@@ -118,6 +118,12 @@ body {
   padding-block: clamp(6rem, 14vw, 12rem);
 }
 
+/* SplitText line masks (SplitReveal): same overhang allowance as .hero-line. */
+.split-line-mask {
+  padding-inline: 0.1em;
+  margin-inline: -0.1em;
+}
+
 /* ───────────────────────── Interactive primitives ───────────────────────── */
 .link-draw {
   padding-bottom: 2px;
@@ -449,6 +455,7 @@ body {
 
 .curtain-label {
   display: block;
+  padding-inline: 0.1em;
   font-family: var(--font-display);
   font-size: clamp(3rem, 10vw, 9rem);
   font-weight: 650;
@@ -598,6 +605,10 @@ body {
   display: block;
   overflow: hidden;
   padding-block: 0.05em;
+  /* Tight tracking makes the last glyph overhang its box; widen the clip area
+     without moving the text. */
+  padding-inline: 0.1em;
+  margin-inline: -0.1em;
 }
 
 .hero-line-1 {

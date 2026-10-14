@@ -31,6 +31,9 @@ export default function SplitReveal({
       const split = SplitText.create(ref.current, {
         type: type === 'chars' ? 'lines,chars' : 'lines',
         mask: 'lines',
+        // Masks get the class "split-line-mask" (see globals.css), which gives the
+        // clip box room for glyphs that overhang under tight letter-spacing.
+        linesClass: 'split-line',
         autoSplit: true,
         onSplit: (self) => {
           // Re-splits on resize must not replay an entrance that already ran.
