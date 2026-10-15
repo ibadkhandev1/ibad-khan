@@ -1,4 +1,5 @@
 import { Bricolage_Grotesque, Inter, JetBrains_Mono } from 'next/font/google'
+import Script from 'next/script'
 import 'lenis/dist/lenis.css'
 import './globals.css'
 import { BASE_URL } from './constants'
@@ -103,6 +104,18 @@ export default function RootLayout({ children }) {
         <Preloader />
         <div className="grain" aria-hidden="true" />
         <JsonLd />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-YWRZDLSG2Q"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){window.dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-YWRZDLSG2Q');
+          `}
+        </Script>
       </body>
     </html>
   )
