@@ -5,6 +5,7 @@ import { PROCESS, SERVICES, getService } from '@/config/services'
 import Link from '@/components/layout/TransitionLink'
 import SectionLabel from '@/components/layout/SectionLabel'
 import SplitReveal from '@/components/motion/SplitReveal'
+import FaqList from '@/components/motion/FaqList'
 import BookCallButton from '@/components/booking/BookCallButton'
 import ServiceList from '@/components/sections/ServiceList'
 
@@ -199,15 +200,7 @@ export default async function ServicePage({ params }) {
             </SplitReveal>
           </div>
           <div className="col-span-12 lg:col-span-7 lg:col-start-6">
-            {service.faqs.map(({ q, a }) => (
-              <details key={q} className="faq-item">
-                <summary>
-                  <h3>{q}</h3>
-                  <span className="faq-icon" aria-hidden="true" />
-                </summary>
-                <p>{a}</p>
-              </details>
-            ))}
+            <FaqList items={service.faqs} />
           </div>
         </div>
       </section>
