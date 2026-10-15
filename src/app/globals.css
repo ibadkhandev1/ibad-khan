@@ -1078,8 +1078,14 @@ body {
   transition: color 0.3s;
 }
 
-.faq-item summary:hover h3 {
+.faq-item summary:hover h3,
+.faq-item[data-state="open"] h3 {
   color: var(--accent);
+}
+
+/* Height is tweened by FaqList; the wrapper clips while it grows/shrinks. */
+.faq-answer {
+  overflow: hidden;
 }
 
 .faq-item p {
@@ -1095,6 +1101,11 @@ body {
   flex-shrink: 0;
   width: 1rem;
   height: 1rem;
+  transition: transform 0.5s var(--ease-soft);
+}
+
+.faq-item[data-state="open"] .faq-icon {
+  transform: rotate(180deg);
 }
 
 .faq-icon::before,
@@ -1113,7 +1124,7 @@ body {
   transform: rotate(90deg);
 }
 
-.faq-item[open] .faq-icon::after {
+.faq-item[data-state="open"] .faq-icon::after {
   transform: rotate(0deg);
 }
 
