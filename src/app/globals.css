@@ -494,7 +494,8 @@ body {
 }
 
 .hero-xray-mask,
-.work-xray {
+.work-xray,
+.nf-xray {
   --lx: -9999px;
   --ly: -9999px;
   --lr: 0px;
@@ -1417,6 +1418,103 @@ cal-floating-button {
 
 .chat-send:not(:disabled):hover {
   transform: scale(1.06);
+}
+
+/* ───────────────────────── 404 ───────────────────────── */
+.nf {
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  padding-block: 8rem clamp(5rem, 10vw, 8rem);
+}
+
+.nf-stage {
+  position: relative;
+  display: grid;
+}
+
+.nf-layer,
+.nf-xray {
+  grid-area: 1 / 1;
+}
+
+.nf-xray {
+  pointer-events: none;
+}
+
+.nf-layer {
+  position: relative;
+}
+
+.nf-digits {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-display);
+  font-size: clamp(9rem, 34vw, 30rem);
+  font-weight: 700;
+  font-stretch: 82%;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+}
+
+.nf-digit-mask {
+  display: block;
+  overflow: hidden;
+  padding: 0.04em 0.1em;
+  margin-inline: -0.1em;
+}
+
+.nf-digit {
+  display: block;
+}
+
+.nf-xray-layer .nf-digit {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--accent);
+}
+
+.nf-xray-layer .nf-digit-mask {
+  outline: 1px dashed rgba(255, 91, 31, 0.4);
+  outline-offset: -1px;
+}
+
+.nf-anno-top {
+  top: 0.5rem;
+  left: 0;
+}
+
+.nf-anno-bottom {
+  right: 0;
+  bottom: 0.5rem;
+}
+
+.nf-link {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding-block: 1.1rem;
+  border-bottom: 1px solid var(--hairline-strong);
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+  font-weight: 600;
+  font-stretch: 85%;
+  letter-spacing: -0.02em;
+  transition: color 0.3s var(--ease-soft);
+}
+
+.nf-link > span:first-child {
+  transition: transform 0.5s var(--ease-soft);
+}
+
+.nf-link:hover,
+.nf-link:focus-visible {
+  color: var(--accent);
+}
+
+.nf-link:hover > span:first-child,
+.nf-link:focus-visible > span:first-child {
+  transform: translateX(0.15em);
 }
 
 /* ───────────────────────── Reduced motion ───────────────────────── */
