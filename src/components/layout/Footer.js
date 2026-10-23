@@ -13,6 +13,7 @@ import BookCallButton from '@/components/booking/BookCallButton'
 const SOCIALS = [
   { label: 'GitHub', href: SOCIAL_LINKS.github },
   { label: 'LinkedIn', href: SOCIAL_LINKS.linkedin },
+  { label: 'Upwork', href: SOCIAL_LINKS.upwork },
 ]
 
 // The finale: one invitation, one big button, and the name rising out of the
@@ -117,7 +118,7 @@ export default function Footer() {
               <a
                 href={WHATSAPP.href}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener"
                 className="link-draw"
               >
                 {WHATSAPP.display}
@@ -127,9 +128,9 @@ export default function Footer() {
           </div>
           <div>
             <dt className="mono-label">Elsewhere</dt>
-            <dd className="mt-3 flex gap-5">
+            <dd className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
               {SOCIALS.map(({ label, href }) => (
-                <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                <a key={label} href={href} target="_blank" rel="me noopener"
                   className="link-draw">{label}</a>
               ))}
             </dd>

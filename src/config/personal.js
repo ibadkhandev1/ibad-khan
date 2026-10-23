@@ -13,6 +13,7 @@ export const PERSONAL_INFO = {
 export const SOCIAL_LINKS = {
   github: 'https://github.com/ibadkhandev1',
   linkedin: 'https://www.linkedin.com/in/ibadkhandev',
+  upwork: 'https://www.upwork.com/freelancers/~01bc8d28cceeccd4d8',
   email: 'mailto:ibadkhan.dev@gmail.com',
 };
 

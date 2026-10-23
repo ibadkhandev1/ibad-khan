@@ -56,7 +56,7 @@ export const metadata = {
   authors: [{ name: 'Ibad Khan' }],
   creator: 'Ibad Khan',
   icons: { icon: '/ibad-fav.svg' },
-  verification: { google: 'googlec5f414645987388e.html' },
+  verification: { google: 'HpT0ebM34zVF01OR8W0cdF5_mdl510SQ9dSb1-_Xt5g' },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
