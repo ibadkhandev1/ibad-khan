@@ -158,7 +158,7 @@ export default function Work() {
             <a
               href={SOCIAL_LINKS.github}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="me noopener"
               className="work-more"
               data-cursor="view"
               data-cursor-label="GitHub ↗"

@@ -114,7 +114,7 @@ export default async function ProjectPage({ params }) {
                   <a
                     href={project.live}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="noopener"
                     className="link-draw"
                   >
                     Live site ↗
@@ -123,7 +123,7 @@ export default async function ProjectPage({ params }) {
                 <a
                   href={project.href}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener"
                   className="link-draw"
                 >
                   Source on GitHub ↗
