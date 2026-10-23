@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useRef } from 'react'
 import { gsap, useGSAP } from '@/lib/gsap'
 import { createLens } from '@/lib/lens'
@@ -7,6 +8,7 @@ import { DESKTOP, FINE_POINTER, MOTION_OK } from '@/lib/motion-tokens'
 import { PROJECTS } from '@/config/content'
 import { SOCIAL_LINKS } from '@/config/personal'
 import SectionLabel from '@/components/layout/SectionLabel'
+import TransitionLink from '@/components/layout/TransitionLink'
 import SplitReveal from '@/components/motion/SplitReveal'
 import ProjectArt from './ProjectArt'
 
@@ -15,17 +17,23 @@ const pad = (value) => String(value).padStart(2, '0')
 function ProjectCard({ project, index }) {
   return (
     <li className="work-card" data-work-card>
-      <a
-        href={project.href}
-        target="_blank"
-        rel="noopener noreferrer"
+      <TransitionLink
+        href={project.path}
+        transitionLabel={project.title}
         className="group block"
         data-cursor="view"
-        data-cursor-label="Repo ↗"
+        data-cursor-label="View"
       >
         <div className="work-art" data-work-art>
           <div className="work-art-inner" data-work-art-inner>
-            <ProjectArt index={index} letter={project.title[0]} />
+            <Image
+              src={project.images.cover.src}
+              alt={project.images.cover.alt}
+              width={project.images.cover.width}
+              height={project.images.cover.height}
+              sizes="(min-width: 1024px) 42vw, 92vw"
+              className="work-cover"
+            />
             <div className="work-xray blueprint" data-work-xray aria-hidden="true">
               <ProjectArt index={index} letter={project.title[0]} variant="xray" />
               <ul className="work-spec">
@@ -41,10 +49,10 @@ function ProjectCard({ project, index }) {
         </div>
         <h3 className="work-title">
           {project.title}
-          <span className="sr-only"> — view repository on GitHub (opens in a new tab)</span>
+          <span className="sr-only"> — view project</span>
         </h3>
-        <p className="mt-3 max-w-[36ch] text-ink-muted">{project.description}</p>
-      </a>
+        <p className="mt-3 max-w-[44ch] text-ink-muted">{project.description}</p>
+      </TransitionLink>
     </li>
   )
 }
@@ -144,7 +152,7 @@ export default function Work() {
 
         <ul ref={trackRef} className="work-track gutter">
           {PROJECTS.map((project, index) => (
-            <ProjectCard key={project.repo} project={project} index={index} />
+            <ProjectCard key={project.slug} project={project} index={index} />
           ))}
           <li className="work-card work-card--end">
             <a

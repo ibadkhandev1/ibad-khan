@@ -718,8 +718,15 @@ body {
 .work-art {
   position: relative;
   overflow: hidden;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 16 / 10;
+  border-radius: 1rem;
   background: var(--surface-1);
+}
+
+.work-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .work-art-inner {
@@ -818,16 +825,17 @@ body {
   }
 
   .work-card {
-    width: clamp(19rem, 26vw, 26rem);
+    /* Landscape product cards; width capped so the 16:10 art fits the pinned viewport. */
+    width: min(42vw, 72svh, 44rem);
   }
 
-  .work-art {
-    aspect-ratio: auto;
-    height: min(44svh, 32rem);
+  .work-card--end {
+    width: clamp(18rem, 24vw, 24rem);
   }
 
   .work-card--end .work-more {
-    height: min(44svh, 32rem);
+    /* Same height as the 16:10 project art next to it. */
+    height: min(26.25vw, 45svh, 27.5rem);
   }
 }
 
@@ -1515,6 +1523,130 @@ cal-floating-button {
 .nf-link:hover > span:first-child,
 .nf-link:focus-visible > span:first-child {
   transform: translateX(0.15em);
+}
+
+/* ───────────────────────── Project pages ───────────────────────── */
+.project-title {
+  font-size: clamp(3.5rem, 11vw, 10rem);
+}
+
+.project-meta {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.project-tag {
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.media-frame {
+  overflow: hidden;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 1rem;
+  background: var(--surface-1);
+}
+
+.media-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Parallax: the frame is ~7% shorter than the 16:10 image, so the shot slides
+   vertically inside it while its full width always stays visible. */
+.project-cover .media-frame {
+  aspect-ratio: 16 / 9.3;
+}
+
+.project-highlights {
+  display: grid;
+  border-top: 1px solid var(--hairline-strong);
+}
+
+.project-highlights li > span {
+  color: var(--accent);
+}
+
+.project-highlights li {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  padding-block: 1.25rem;
+  border-bottom: 1px solid var(--hairline-strong);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  font-weight: 600;
+  font-stretch: 85%;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.project-mobiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 4vw, 4rem);
+  max-width: 54rem;
+  margin-inline: auto;
+}
+
+.project-mobile .media-frame {
+  border-radius: 1.75rem;
+}
+
+.project-next {
+  display: block;
+  padding-block: clamp(4rem, 9vw, 7rem);
+  border-top: 1px solid var(--hairline-strong);
+}
+
+.project-next-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 1.25rem;
+}
+
+.project-next-title {
+  font-size: clamp(3rem, 9vw, 8.5rem);
+  transition: color 0.4s var(--ease-soft), transform 0.6s var(--ease-soft);
+}
+
+.project-next:hover .project-next-title,
+.project-next:focus-visible .project-next-title {
+  color: var(--accent);
+  transform: translateX(0.08em);
+}
+
+.project-next-thumb {
+  display: none;
+  overflow: hidden;
+  flex-shrink: 0;
+  width: clamp(12rem, 24vw, 22rem);
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 1rem;
+}
+
+.project-next-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--ease-soft);
+}
+
+.project-next:hover .project-next-thumb img {
+  transform: scale(1.06);
+}
+
+@media (min-width: 768px) {
+  .project-next-thumb {
+    display: block;
+  }
 }
 
 /* ───────────────────────── Reduced motion ───────────────────────── */

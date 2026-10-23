@@ -16,56 +16,107 @@ export const STATS = [
   { value: 7, pad: 2, label: 'Selected builds below' },
 ]
 
-export const PROJECTS = [
+// Projects power the "Selected work" reel and the /work/[slug] product pages.
+// Images live in /public/work/<slug>/ with fixed names (cover, desktop-01,
+// desktop-02, mobile-01, mobile-02). The current files are generated demos —
+// replace them with real screenshots (same names, any size; 16:10 for desktop
+// and cover, 1:2 for mobile) and update the alt text below.
+// Optional per project: `live` (deployed URL) and `year`.
+const PROJECT_DATA = [
   {
+    slug: 'ai-fitness-coach',
     title: 'AI Fitness Coach',
     description:
       'Full-stack AI fitness platform — personalised plans, habit tracking, coach chat '
       + 'and progress insights.',
+    highlights: ['Personalised plans', 'Habit tracking', 'AI coach chat', 'Progress insights'],
     tech: ['Next.js', 'MongoDB', 'AI SDK'],
     repo: 'liquad-assests',
   },
   {
+    slug: 'power-ai',
     title: 'Power AI',
     description:
       'Full-screen AI product landing page with a video background, liquid-glass UI and '
       + 'an animated brand marquee.',
+    highlights: ['Full-screen video background', 'Liquid-glass UI', 'Animated brand marquee'],
     tech: ['React', 'TypeScript', 'Tailwind'],
     repo: 'power-ai',
   },
   {
+    slug: 'securify',
     title: 'Securify',
     description:
       'Security-focused web app on a modern TypeScript frontend and production-ready '
       + 'Next.js patterns.',
+    highlights: ['Security-focused product UI', 'Typed TypeScript frontend', 'Next.js patterns'],
     tech: ['Next.js', 'TypeScript', 'Tailwind'],
     repo: 'securify',
   },
   {
+    slug: 'landify',
     title: 'Landify',
     description: 'Landing page built around smooth GSAP choreography and clean UI patterns.',
+    highlights: ['GSAP choreography', 'Clean, reusable UI patterns'],
     tech: ['React', 'Tailwind', 'GSAP'],
     repo: 'Landify',
   },
   {
+    slug: 'heroui',
     title: 'heroUI',
     description: 'A kit of reusable hero sections, each with its own animation pattern.',
+    highlights: ['Reusable hero sections', 'A distinct animation pattern per hero'],
     tech: ['Next.js', 'Tailwind', 'Motion'],
     repo: 'heroUI',
   },
   {
+    slug: 'codelace',
     title: 'Codelace',
     description: 'Full platform redesign focused on UX, modern aesthetics and responsiveness.',
+    highlights: ['Full platform redesign', 'UX-first layouts', 'Responsive at every breakpoint'],
     tech: ['React', 'CSS', 'Figma'],
     repo: 'Codelace-redesign',
   },
   {
+    slug: 'weather-api',
     title: 'Weather API',
     description: 'Real-time weather dashboard on the OpenWeatherMap API with dynamic theming.',
+    highlights: ['Real-time OpenWeatherMap data', 'Theme that follows the weather'],
     tech: ['JavaScript', 'REST API', 'CSS'],
     repo: 'weatherAPI',
   },
-].map((project) => ({ ...project, href: `${SOCIAL_LINKS.github}/${project.repo}` }))
+]
+
+const DESKTOP_SIZE = { width: 1600, height: 1000 }
+const MOBILE_SIZE = { width: 750, height: 1500 }
+
+const projectImages = ({ slug, title }) => {
+  const shot = (file, label, size) => ({
+    src: `/work/${slug}/${file}.webp`,
+    alt: `${title} — ${label}`,
+    ...size,
+  })
+  return {
+    cover: shot('cover', 'home page', DESKTOP_SIZE),
+    desktop: [
+      shot('desktop-01', 'main screen', DESKTOP_SIZE),
+      shot('desktop-02', 'features', DESKTOP_SIZE),
+    ],
+    mobile: [
+      shot('mobile-01', 'mobile home', MOBILE_SIZE),
+      shot('mobile-02', 'mobile list', MOBILE_SIZE),
+    ],
+  }
+}
+
+export const PROJECTS = PROJECT_DATA.map((project) => ({
+  ...project,
+  path: `/work/${project.slug}`,
+  href: `${SOCIAL_LINKS.github}/${project.repo}`,
+  images: projectImages(project),
+}))
+
+export const getProject = (slug) => PROJECTS.find((project) => project.slug === slug)
 
 export const EXPERIENCES = [
   {

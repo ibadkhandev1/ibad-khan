@@ -25,11 +25,28 @@ npm run build && npm start
 | What | File |
 |---|---|
 | Projects, experience, stats, toolkit, menu | `src/config/content.js` |
+| Project images (cards + `/work/[slug]` pages) | `public/work/<slug>/` — see below |
 | Service pages (copy, FAQ, SEO titles/descriptions) | `src/config/services.js` |
 | Name, email, social links | `src/config/personal.js` |
 | Chat greeting and suggestions | `src/lib/chat.js` (`CHAT_CONFIG`) |
 | Chat backend | `src/lib/chat.js` → `sendChatMessage()` |
 | Resume PDF | `public/ibad-khan-resume.pdf` (download name set in `RESUME` in `personal.js`) |
+
+### Project pages and images
+
+Each project in `PROJECT_DATA` (`src/config/content.js`) gets a page at `/work/<slug>` and a
+card in "Selected work". Its images live in `public/work/<slug>/` with fixed names:
+
+| File | Used for | Shape |
+|---|---|---|
+| `cover.webp` | Card in the reel, page hero, "Next project" link, social preview | 16:10 |
+| `desktop-01.webp`, `desktop-02.webp` | Page gallery | 16:10 |
+| `mobile-01.webp`, `mobile-02.webp` | Page gallery (side by side) | 1:2 |
+
+The current files are generated demos (watermarked "DEMO IMAGE"). Replace them with real
+screenshots using the same names (WebP, PNG or JPG all work — update the extension in
+`projectImages()` if you switch format), then edit the alt text there. Optional per project:
+`live` (deployed URL, shown as "Live site ↗") and `highlights`.
 
 ### Connecting the chat
 

@@ -24,7 +24,9 @@ No test runner is configured. No typecheck script.
 ## Architecture
 
 - `src/app/` — routes: `/` (home sections), `/services`, `/services/[slug]` (static, one
-  per entry in `src/config/services.js`), `/blog`, `/blog/[slug]`, `/seo-docs`.
+  per entry in `src/config/services.js`), `/work/[slug]` (static project pages from
+  `PROJECTS` in `src/config/content.js`; images in `public/work/<slug>/`), `/blog`,
+  `/blog/[slug]`, `/seo-docs`, plus `not-found.js`.
   `layout.js` mounts global chrome; `template.js` animates route-in after a curtain transition.
 - `src/lib/` — `gsap.js` (single plugin registration + custom eases), `lenis.js` (the only
   smooth-scroll engine, driven by the GSAP ticker; `getLenis()`), `motion-tokens.js`,
