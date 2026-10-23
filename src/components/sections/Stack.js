@@ -1,63 +1,128 @@
-'use client'
-
-import { useRef } from 'react'
-import { gsap, useGSAP } from '@/lib/gsap'
-import { MOTION_OK } from '@/lib/motion-tokens'
-import { MARQUEE_PRIMARY, MARQUEE_SECONDARY, STACK_GROUPS } from '@/config/content'
+import {
+  siBootstrap,
+  siCss,
+  siExpress,
+  siFigma,
+  siGit,
+  siGithub,
+  siGsap,
+  siHtml5,
+  siJavascript,
+  siJquery,
+  siMongodb,
+  siNextdotjs,
+  siReact,
+  siReacthookform,
+  siRedis,
+  siSupabase,
+  siSwiper,
+  siTailwindcss,
+  siTypescript,
+  siVercel,
+  siWebgl,
+  siWordpress,
+} from 'simple-icons'
+import { EXPERIENCES, PROJECTS, STACK_LAYERS } from '@/config/content'
 import SectionLabel from '@/components/layout/SectionLabel'
-import Marquee from '@/components/motion/Marquee'
+import SplitReveal from '@/components/motion/SplitReveal'
+import StackLayers from './StackLayers'
 
+// Simple Icons (CC0) brand marks, resolved on the server so the library never
+// ships to the browser — only the paths that are actually used.
+const ICONS = {
+  siBootstrap,
+  siCss,
+  siExpress,
+  siFigma,
+  siGit,
+  siGithub,
+  siGsap,
+  siHtml5,
+  siJavascript,
+  siJquery,
+  siMongodb,
+  siNextdotjs,
+  siReact,
+  siReacthookform,
+  siRedis,
+  siSupabase,
+  siSwiper,
+  siTailwindcss,
+  siTypescript,
+  siVercel,
+  siWebgl,
+  siWordpress,
+}
+
+const INK = '#ece7dc'
+
+// Near-black brand colours (Next.js, Express, GitHub, Vercel) would disappear on
+// the dark page, so they use the site's ink colour on hover instead.
+const readableColor = (hex) => {
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b < 0.12 ? INK : `#${hex}`
+}
+
+const normalize = (value) => value.toLowerCase().replace(/[^a-z0-9]/g, '')
+
+// How many real builds (projects + jobs) list any tool from this layer.
+const countBuilds = (tools) => {
+  const keys = tools.map((tool) => normalize(tool.name))
+  const uses = (stack) => stack.some((entry) => {
+    const other = normalize(entry)
+    return keys.some((key) => other.startsWith(key) || key.startsWith(other))
+  })
+  const projects = PROJECTS.filter((project) => uses(project.tech)).length
+  const jobs = EXPERIENCES.filter((exp) => uses(exp.skills)).length
+  return projects + jobs
+}
+
+const resolveTool = (tool) => {
+  const brand = tool.icon && ICONS[tool.icon]
+  return {
+    name: tool.name,
+    glyph: tool.glyph ?? null,
+    path: brand ? brand.path : null,
+    color: brand ? readableColor(brand.hex) : 'var(--accent)',
+  }
+}
+
+// Toolkit: the stack drawn as an exploded cross-section of a build.
 export default function Stack() {
-  const rootRef = useRef(null)
-
-  useGSAP(() => {
-    const mm = gsap.matchMedia()
-    mm.add(MOTION_OK, () => {
-      gsap.from('[data-stack-item]', {
-        xPercent: -12,
-        autoAlpha: 0,
-        duration: 0.9,
-        stagger: { each: 0.035, from: 'start' },
-        ease: 'power2.out',
-        scrollTrigger: { trigger: '[data-stack-grid]', start: 'top 85%', once: true },
-      })
-    })
-  }, { scope: rootRef })
+  const layers = STACK_LAYERS.map((layer) => ({
+    ...layer,
+    tools: layer.tools.map(resolveTool),
+    builds: countBuilds(layer.tools),
+  }))
+  const toolCount = layers.reduce((sum, layer) => sum + layer.tools.length, 0)
 
   return (
-    <section
-      ref={rootRef}
-      id="stack"
-      className="section overflow-hidden"
-      aria-labelledby="stack-title"
-    >
-      <div className="gutter flex flex-wrap items-baseline justify-between gap-4">
-        <SectionLabel index="07">Toolkit</SectionLabel>
-        <h2 id="stack-title" className="mono-label">What the work is made with</h2>
-      </div>
-
-      <div className="mt-12 space-y-2" aria-hidden="true">
-        <Marquee items={MARQUEE_PRIMARY} />
-        <Marquee items={MARQUEE_SECONDARY} reverse outline duration={38} />
-      </div>
-
-      <div
-        data-stack-grid
-        className="gutter mt-20 grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-4"
-      >
-        {STACK_GROUPS.map((group, groupIndex) => (
-          <div key={group.title} className="border-t border-hairline-strong pt-4">
-            <h3 className="mono-label">
-              <span className="text-accent">{String(groupIndex + 1).padStart(2, '0')}</span>{' '}
-              {group.title}
-            </h3>
-            <ul className="mt-5 space-y-2">
-              {group.items.map((item) => (
-                <li key={item} data-stack-item className="text-lg">{item}</li>
-              ))}
-            </ul>
+    <section id="stack" className="section" aria-labelledby="stack-title">
+      <div className="gutter">
+        <div className="grid grid-cols-12 items-end gap-x-6 gap-y-8">
+          <div className="col-span-12 lg:col-span-7">
+            <SectionLabel index="07">Toolkit</SectionLabel>
+            <SplitReveal
+              id="stack-title"
+              className="display mt-6 text-[clamp(3rem,7.5vw,7rem)]"
+            >
+              The system underneath.
+            </SplitReveal>
           </div>
-        ))}
+          <div className="col-span-12 lg:col-span-4 lg:col-start-9">
+            <p className="lede">
+              Every build, cross-sectioned: the layers I work in, from the first sketch to
+              the deploy.
+            </p>
+            <p className="mono-label mt-4">
+              {String(layers.length).padStart(2, '0')} layers · {toolCount} tools
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-16">
+          <StackLayers layers={layers} />
+        </div>
       </div>
     </section>
   )

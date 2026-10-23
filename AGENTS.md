@@ -33,9 +33,12 @@ No test runner is configured. No typecheck script.
   `lens.js` (X-ray cursor mask), `intro.js` (preloader → hero handoff), `cal.js` (Cal.com embed loader), `chat.js` (chat config + backend stub).
 - `src/components/`
   - `layout/` — Header, Menu, Footer, Cursor, Preloader, TransitionProvider/TransitionLink
-  - `motion/` — SplitReveal, Magnetic, Marquee, Counter
+  - `motion/` — SplitReveal, Magnetic, Counter, FaqList
   - `sections/` — home sections (Hero, Manifesto, Work, Principles, Experience,
-    ServicesTeaser, Stack) and shared ServiceList / ProjectArt
+    ServicesTeaser, Stack) and shared ServiceList / ProjectArt. `Stack.js` (Toolkit) is a
+    server component that resolves brand logos from `simple-icons` (CC0, never shipped to
+    the client) and renders `StackLayers` — the stack as an exploded cross-section, data in
+    `STACK_LAYERS` (`content.js`)
   - `webgl/SignalField.js` — OGL contour shader behind the hero
   - `booking/BookCallButton.js` — opens Cal.com's own popup; hover/focus loads `embed.js`
     and preloads the booking iframe (never on page load: Cal sets a third-party cookie)

@@ -890,42 +890,151 @@ body {
   background: var(--accent);
 }
 
-/* ───────────────────────── Marquee ───────────────────────── */
-.marquee {
-  overflow: hidden;
+/* ───────────────────────── Toolkit (exploded stack) ───────────────────────── */
+.stack-layers {
+  display: grid;
+  gap: 1.75rem;
 }
 
-.marquee-track,
-.marquee-group {
-  display: flex;
-  flex-shrink: 0;
+.stack-layer {
+  position: relative;
+  display: grid;
+  grid-template-areas:
+    "index head"
+    "index tools"
+    "index meta";
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  gap: 0.9rem 1rem;
+  padding: 1.35rem 1.25rem;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 1rem;
+  background-color: var(--surface-1);
+  background-image:
+    linear-gradient(var(--hairline-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--hairline-soft) 1px, transparent 1px);
+  background-size: 28px 28px;
+  transform-origin: 50% 0%;
+  transition:
+    border-color 0.4s var(--ease-soft),
+    background-color 0.4s var(--ease-soft);
 }
 
-.marquee-track {
-  width: max-content;
+/* Hovering a layer X-rays it: the grid turns to blueprint and logos take colour. */
+.stack-layer:hover {
+  border-color: rgba(255, 91, 31, 0.55);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
 }
 
-.marquee-item {
-  display: flex;
-  align-items: center;
-  gap: 0.3em;
-  padding-right: 0.3em;
+.stack-layer-index {
+  grid-area: index;
+  color: transparent;
   font-family: var(--font-display);
-  font-size: clamp(3.5rem, 10vw, 9.5rem);
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
   font-weight: 700;
   font-stretch: 82%;
   line-height: 1;
-  letter-spacing: -0.04em;
-  white-space: nowrap;
+  -webkit-text-stroke: 1px var(--accent);
 }
 
-.marquee-mark {
+.stack-layer-head {
+  grid-area: head;
+}
+
+.stack-layer-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.6vw, 2.25rem);
+  font-weight: 650;
+  font-stretch: 85%;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.stack-layer-note {
+  margin-top: 0.45rem;
+  color: var(--ink-muted);
+  font-size: 0.95rem;
+}
+
+.stack-tools {
+  grid-area: tools;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1.4rem;
+}
+
+.stack-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--ink-muted);
+  font-size: 0.98rem;
+  white-space: nowrap;
+  transition: color 0.3s var(--ease-soft);
+}
+
+.stack-tool-icon {
   flex-shrink: 0;
-  width: 0.32em;
-  height: 0.32em;
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 2;
+  width: 1.6rem;
+  height: 1.6rem;
+  color: var(--ink);
+  transition:
+    color 0.4s var(--ease-soft),
+    transform 0.4s var(--ease-soft);
+}
+
+.stack-layer:hover .stack-tool,
+.stack-tool:hover {
+  color: var(--ink);
+}
+
+.stack-layer:hover .stack-tool-icon {
+  color: var(--brand);
+}
+
+.stack-tool:hover .stack-tool-icon {
+  transform: translateY(-2px) scale(1.08);
+}
+
+/* No hover on touch screens, so the logos show in colour from the start. */
+@media (hover: none) {
+  .stack-tool-icon {
+    color: var(--brand);
+  }
+}
+
+.stack-layer-meta {
+  grid-area: meta;
+}
+
+/* Dashed connector from each layer down to the next (drawn in by GSAP). */
+.stack-layer-link {
+  position: absolute;
+  top: 100%;
+  left: 2.6rem;
+  height: 1.75rem;
+  border-left: 1px dashed rgba(255, 91, 31, 0.6);
+  transform-origin: 50% 0%;
+}
+
+@media (min-width: 1024px) {
+  .stack-layer {
+    grid-template-areas: "index head tools meta";
+    grid-template-columns: 4rem minmax(0, 1fr) minmax(0, 1.9fr) 8rem;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem 1.75rem;
+  }
+
+  .stack-layer-meta {
+    text-align: right;
+  }
+
+  .stack-layer-link {
+    left: 3.55rem;
+  }
 }
 
 /* ───────────────────────── Footer ───────────────────────── */
@@ -1656,18 +1765,5 @@ cal-floating-button {
   .menu-note,
   .chat-message {
     animation: none;
-  }
-
-  .marquee-track {
-    flex-wrap: wrap;
-    width: auto;
-  }
-
-  .marquee-group[aria-hidden="true"] {
-    display: none;
-  }
-
-  .marquee-group {
-    flex-wrap: wrap;
   }
 }

@@ -145,18 +145,82 @@ export const EXPERIENCES = [
   },
 ]
 
-export const STACK_GROUPS = [
+// Toolkit section: the stack drawn as an exploded cross-section, top to bottom.
+// `icon` is a Simple Icons export name (resolved in sections/Stack.js); tools
+// without an official logo use a `glyph` from sections/ToolIcon.js.
+export const STACK_LAYERS = [
   {
-    title: 'Build',
-    items: ['React', 'Next.js', 'JavaScript (ES6+)', 'HTML / CSS', 'Tailwind CSS', 'Bootstrap'],
+    name: 'Design',
+    note: 'Where the interface is drawn before it’s built.',
+    tools: [{ name: 'Figma', icon: 'siFigma' }],
   },
-  { title: 'Motion', items: ['GSAP', 'Motion', 'Lenis', 'WebGL (OGL)'] },
-  { title: 'Content', items: ['Headless WordPress', 'WordPress REST API', 'REST APIs', 'jQuery'] },
-  { title: 'Craft', items: ['Responsive design', 'Web performance', 'Figma', 'Git / GitHub'] },
+  {
+    name: 'Structure',
+    note: 'Semantic markup and the language underneath it.',
+    tools: [
+      { name: 'HTML5', icon: 'siHtml5' },
+      { name: 'JavaScript', icon: 'siJavascript' },
+      { name: 'TypeScript', icon: 'siTypescript' },
+    ],
+  },
+  {
+    name: 'Style',
+    note: 'Layout, design tokens and responsive rules.',
+    tools: [
+      { name: 'CSS', icon: 'siCss' },
+      { name: 'Tailwind CSS', icon: 'siTailwindcss' },
+      { name: 'Bootstrap', icon: 'siBootstrap' },
+    ],
+  },
+  {
+    name: 'Interface',
+    note: 'Components, forms and the interactive pieces.',
+    tools: [
+      { name: 'React', icon: 'siReact' },
+      { name: 'React Hook Form', icon: 'siReacthookform' },
+      { name: 'Swiper', icon: 'siSwiper' },
+      { name: 'jQuery', icon: 'siJquery' },
+    ],
+  },
+  {
+    name: 'Framework',
+    note: 'Rendering, routing and SEO.',
+    tools: [
+      { name: 'Next.js', icon: 'siNextdotjs' },
+      { name: 'WordPress', icon: 'siWordpress' },
+    ],
+  },
+  {
+    name: 'Motion',
+    note: 'Scroll, transitions and a little WebGL.',
+    tools: [
+      { name: 'GSAP', icon: 'siGsap' },
+      { name: 'Motion', glyph: 'wave' },
+      { name: 'Lenis', glyph: 'scroll' },
+      { name: 'WebGL', icon: 'siWebgl' },
+    ],
+  },
+  {
+    name: 'Data & APIs',
+    note: 'The databases, caches and APIs the interface sits on.',
+    tools: [
+      { name: 'MongoDB', icon: 'siMongodb' },
+      { name: 'Supabase', icon: 'siSupabase' },
+      { name: 'Redis', icon: 'siRedis' },
+      { name: 'Express', icon: 'siExpress' },
+      { name: 'REST APIs', glyph: 'api' },
+    ],
+  },
+  {
+    name: 'Ship',
+    note: 'Versioned, reviewed and deployed.',
+    tools: [
+      { name: 'Git', icon: 'siGit' },
+      { name: 'GitHub', icon: 'siGithub' },
+      { name: 'Vercel', icon: 'siVercel' },
+    ],
+  },
 ]
-
-export const MARQUEE_PRIMARY = ['React', 'Next.js', 'JavaScript', 'Tailwind CSS', 'WordPress']
-export const MARQUEE_SECONDARY = ['GSAP', 'Motion', 'Lenis', 'WebGL', 'Performance', 'Figma']
 
 export const MENU_LINKS = [
   { label: 'Index', href: '/', note: 'Back to the top — the X-ray hero.' },
