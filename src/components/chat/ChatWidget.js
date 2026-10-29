@@ -38,11 +38,12 @@ export default function ChatWidget() {
       hasOpened.current = true
       gsap.timeline()
         .set(panel, { visibility: 'visible' })
-        .fromTo(panel, { clipPath: 'inset(100% 0% 0% 0% round 1.25rem)', y: 24 }, {
-          clipPath: 'inset(0% 0% 0% 0% round 1.25rem)',
+        .fromTo(panel, { clipPath: 'inset(100% -16px -16px -16px)', y: 24 }, {
+          // Negative insets leave room for the sticker's hard offset shadow.
+          clipPath: 'inset(-16px -16px -16px -16px)',
           y: 0,
           duration,
-          ease: 'expo.inout.custom',
+          ease: 'snap.out',
           onComplete: () => inputRef.current?.focus({ preventScroll: true }),
         })
         .from(panel.querySelectorAll('[data-chat-fade]'), {
@@ -56,7 +57,7 @@ export default function ChatWidget() {
 
     if (!hasOpened.current) return
     gsap.to(panel, {
-      clipPath: 'inset(100% 0% 0% 0% round 1.25rem)',
+      clipPath: 'inset(100% -16px -16px -16px)',
       y: 24,
       duration: isReduced ? 0 : 0.45,
       ease: 'power2.in',

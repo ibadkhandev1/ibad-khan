@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { gsap } from '@/lib/gsap'
 import { getLenis, scrollToTarget } from '@/lib/lenis'
 import { EASE, REDUCED_MOTION } from '@/lib/motion-tokens'
+import Shape from '@/components/memphis/Shape'
 
 const TransitionContext = createContext({ navigate: () => {} })
 
@@ -13,7 +14,7 @@ export const usePageTransition = () => use(TransitionContext)
 // Module-level so the route template can tell a real transition from a first load.
 export const transitionState = { phase: 'idle' }
 
-// Entrance animations on the incoming page wait for the curtain to start lifting;
+// Entrance animations on the incoming page wait for the tiles to start clearing;
 // otherwise they finish unseen behind it. Outside a transition, runs immediately.
 const revealListeners = new Set()
 
@@ -32,6 +33,13 @@ const flushReveal = () => {
   revealListeners.clear()
 }
 
+// 24 tiles (6 × 4, or 4 × 6 on phones). Every fourth carries a primitive so the
+// cover reads as the kit itself snapping over the page, not a plain wipe.
+const TILES = Array.from({ length: 24 }, (_, index) => ({
+  color: (index * 3 + Math.floor(index / 6)) % 4,
+  shape: index % 4 === 1 ? ['circle', 'triangle', 'plus', 'half'][(index >> 2) % 4] : null,
+}))
+
 const jumpToHash = (hash) => {
   if (!hash || !document.querySelector(hash)) {
     scrollToTarget(0, { immediate: true, force: true })
@@ -40,37 +48,38 @@ const jumpToHash = (hash) => {
   scrollToTarget(hash, { immediate: true, force: true })
 }
 
-// Route transitions: OUT (curtain covers) → router.push → IN (curtain lifts
+// Route transitions: OUT (palette tiles pop over the page) → router.push → IN (tiles pop away
 // once the new pathname has committed).
 export default function TransitionProvider({ children }) {
   const router = useRouter()
   const pathname = usePathname()
   const curtainRef = useRef(null)
   const labelRef = useRef(null)
+  const labelWrapRef = useRef(null)
   const pendingHash = useRef('')
 
   useEffect(() => {
     if (transitionState.phase !== 'covered') return
     const curtain = curtainRef.current
-    const panels = curtain.querySelectorAll('[data-panel]')
+    const tiles = curtain.querySelectorAll('[data-tile]')
 
     jumpToHash(pendingHash.current)
     transitionState.phase = 'revealing'
     gsap.timeline({
       onComplete: () => {
-        gsap.set(curtain, { visibility: 'hidden' })
+        gsap.set([curtain, labelWrapRef.current], { visibility: 'hidden' })
         transitionState.phase = 'idle'
       },
     })
-      .to(labelRef.current, { yPercent: -110, duration: 0.45, ease: 'power2.in' }, 0.15)
-      .to([...panels].reverse(), {
-        scaleY: 0,
-        transformOrigin: '50% 0%',
-        duration: 0.9,
-        ease: EASE.transition,
-        stagger: 0.08,
-      }, 0.35)
-      .add(flushReveal, 0.5)
+      .to(labelRef.current, { scale: 0, rotation: 12, duration: 0.3, ease: 'back.in(2)' }, 0.1)
+      .to(tiles, {
+        scale: 0,
+        rotation: 45,
+        duration: 0.45,
+        ease: 'back.in(1.6)',
+        stagger: { grid: 'auto', from: 'edges', amount: 0.35 },
+      }, 0.2)
+      .add(flushReveal, 0.4)
   }, [pathname])
 
   const navigate = (href, label = '') => {
@@ -92,7 +101,7 @@ export default function TransitionProvider({ children }) {
     }
 
     const curtain = curtainRef.current
-    const panels = curtain.querySelectorAll('[data-panel]')
+    const tiles = curtain.querySelectorAll('[data-tile]')
     labelRef.current.textContent = label
     pendingHash.current = url.hash
     transitionState.phase = 'covering'
@@ -105,26 +114,34 @@ export default function TransitionProvider({ children }) {
         router.push(target, { scroll: !url.hash })
       },
     })
-      .set(curtain, { visibility: 'visible' })
-      .fromTo(panels, { scaleY: 0, transformOrigin: '50% 100%' }, {
-        scaleY: 1,
-        duration: 0.75,
-        ease: EASE.transition,
-        stagger: 0.08,
+      .set([curtain, labelWrapRef.current], { visibility: 'visible' })
+      .fromTo(tiles, { scale: 0, rotation: -45 }, {
+        scale: 1,
+        rotation: 0,
+        duration: 0.45,
+        ease: EASE.pop,
+        stagger: { grid: 'auto', from: 'center', amount: 0.3 },
       })
-      .fromTo(labelRef.current, { yPercent: 110 }, { yPercent: 0, duration: 0.5 }, '-=0.35')
+      .fromTo(labelRef.current, { scale: 0, rotation: -12 }, {
+        scale: 1,
+        rotation: -3,
+        duration: 0.45,
+        ease: EASE.pop,
+      }, '-=0.25')
   }
 
   return (
     <TransitionContext value={{ navigate }}>
       {children}
       <div ref={curtainRef} className="curtain" aria-hidden="true">
-        <div data-panel className="curtain-panel bg-accent" />
-        <div data-panel className="curtain-panel bg-surface-1">
-          <span className="curtain-label-mask">
-            <span ref={labelRef} className="curtain-label" />
-          </span>
-        </div>
+        {TILES.map((tile, index) => (
+          <div key={index} data-tile data-c={tile.color} className="curtain-tile">
+            {tile.shape && <Shape type={tile.shape} />}
+          </div>
+        ))}
+      </div>
+      <div ref={labelWrapRef} className="curtain-label-wrap" aria-hidden="true">
+        <span ref={labelRef} className="curtain-label" />
       </div>
     </TransitionContext>
   )

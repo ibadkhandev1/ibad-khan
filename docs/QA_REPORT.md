@@ -1,68 +1,52 @@
-# QA Report
+# QA Report — Memphis revamp (2026-10-29)
 
-Measured on a production build (`next build && next start`) with headless Microsoft Edge
-(Playwright) and Lighthouse 12.8.2, mobile preset. Headless Edge has no GPU, so WebGL runs
-on SwiftShader (software). That inflates main-thread cost compared with a real phone.
+Tested against `npm run build && npm start`, driven by Playwright in Edge at 1440×900,
+1280×800 and 390×844 (touch), plus a `prefers-reduced-motion: reduce` pass.
 
-## Automated checks
+## Checks
 
 | Check | Result |
 |---|---|
-| `npm run build` | Pass |
-| `npm run lint` on new code (`src/app`, `src/lib`, `src/components/{layout,motion,sections,webgl,chat,booking}`) | Clean |
-| `npm run lint` on whole repo | 4 pre-existing issues in unused legacy components (`Backgrounds/Aurora.js`, `Backgrounds/Orb.js`, `TextAnimations/SplitText.js`, `TextAnimations/GradientText.js`) |
-| Console errors / page errors (desktop, mobile, reduced motion) | None |
-| Route change × 5 (home ↔ blog) | 1 pin-spacer, 1 canvas, curtain hidden, scroll at top: no leaks |
-| Footer heading after navigating home → /services → bottom | All characters revealed |
-| Leaf text hidden after full scroll (desktop, mobile, reduced motion) | None |
-| Horizontal overflow at 390px | 0px |
-| Menu: focus moves to first link, Esc closes | Pass |
-| Chat: send, typing state, reply, Esc closes | Pass |
-| Book a call: opens Cal.com's own popup | See "Not done" |
-| Service pages: one `h1`, canonical, meta description, Service/Breadcrumb/FAQ JSON-LD | Pass |
-| Sitemap includes all 7 service URLs | Pass |
+| `npm run build` | Passes, 31 static routes |
+| `npm run lint` | Clean on everything touched. 4 pre-existing problems remain in the unused legacy folders (`Backgrounds/Aurora.js`, `Backgrounds/Orb.js`, `TextAnimations/*`) |
+| Console errors: `/`, `/services`, `/services/react-developer`, `/blog`, `/work/*` | None (dev and production) |
+| Hydration | Clean. Fixed: whitespace mismatch in the props readout; raw `<script>` in layout moved to `next/script` (`beforeInteractive`) |
+| `/nope` (404) | Only the page's own 404. Fixed: hash-only links (`#contact`) no longer prefetch the current URL |
+| Hero at 1440×900 / 390×844 | Name, intro, CTAs and props panel all above the fold |
+| Shuffle | New seed, layout, colours and `wdth`; readout updates; S shortcut works |
+| Palette swap | Re-skins hero, header, menu, chat, tiles, cards; persists per visitor |
+| Work reel (desktop) | Pins and scrubs; covers reveal; velocity wiggle settles |
+| Menu | Opens as a circle from the toggle; Esc closes; focus moves to the first link |
+| Route transition | Tiles cover, label pops, new route, tiles clear |
+| Reduced motion | Full static composition; nothing left at opacity 0; shuffle still works, instantly |
+| Mobile | Header utilities respected (see below); stack, principles, footer readable |
 
-## Lighthouse (mobile, home page)
+## Bugs found and fixed during QA
 
-| Category | Score | Target |
-|---|---|---|
-| Performance | 44–51 (service pages: 70) | ≥ 85, **not met** |
-| Accessibility | 100 | ≥ 95 |
-| Best Practices | 100 | ≥ 95 |
-| SEO | 100 | 100 |
+- Component CSS was unlayered, so it beat Tailwind v4 utilities (`hidden` lost to
+  `.header-pill { display }`). Moved into `@layer components`.
+- Footer name overflowed at `wdth` 150 (15.5vw → 12vw).
+- Hero overflowed 900px tall viewports; name resized to `min(22vw, 24svh)`.
+- Clip-path reveals cut off the hard shadows (chat panel, media frames): negative insets
+  plus `clearProps`.
+- GSAP's inline `transform` overrode the work card hover lift; hover moved to `translate`.
 
-CLS is 0. Simulated LCP is about 4–5s and TBT about 1.6–2.2s. In the unthrottled trace,
-first paint dropped from 5.3s to about 2s after the WebGL field was deferred until after
-the intro and rendered below native resolution.
+## Not verified here
 
-### What still costs performance
+- Lighthouse scores, Safari / iOS and Firefox (no runner available in this session).
+- Memory over many route changes.
 
-1. Script evaluation and hydration of GSAP, SplitText, ScrollTrigger and the page
-   components under 4× CPU throttling.
-2. The preloader by design holds the hero for at least 1s on a first visit.
-3. Software WebGL in headless test runs. Re-test on a real mid-range phone and in
-   PageSpeed Insights after deploy before acting on these numbers.
-
-### Next steps if the score must reach 85+
-
-- Lazy-load the GSAP plugins used only below the fold (SplitText for later sections).
-- Drop the preloader on repeat visits entirely, or make it skip when assets are cached.
-- Code-split the home sections below the fold with `next/dynamic`.
-
-## Jury self-score (honest)
+## Juror Mode (harsh)
 
 | Criterion | Score | Note |
 |---|---|---|
-| Design | 8 | Distinct type-led direction, consistent palette |
-| Usability | 6.5 | A11y strong, mobile perf below target |
-| Creativity | 8 | X-ray lens concept carried through hero, work cards and annotations |
-| Content | 7.5 | Real copy and projects; no project imagery yet |
+| Design | 8 | Strong, coherent Memphis kit; type-led hero |
+| Usability | 8 | Fast DOM-only; chat button crowds small screens |
+| Creativity | 8 | The props panel as navigation is the idea, and it re-skins the whole site |
+| Content | 7 | Copy is real; project images are still generated demos |
+| Animations | 8 | Seven reveal grammars, one persona |
+| Accessibility | 8 | Native radios/range/button, live region, reduced-motion path |
+| Responsive | 8 | Designed mobile hero (12 shapes), no horizontal scroll |
 
-## Not done
-
-- No real project screenshots exist, so cards use generated typographic art and there
-  is no WebGL image-hover displacement.
-- No sound design (optional in the brief).
-- Not tested on real Safari / iOS hardware.
-- The Cal.com popup is third-party UI and was not verified in the headless run; click
-  "Book a call" once in a real browser to confirm the `ibad-khaan/15min` event loads.
+**The one thing more time would buy:** real project screenshots, and a new OG image (the
+current `featured-image.jpg` shows the old dark design).

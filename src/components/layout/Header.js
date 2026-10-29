@@ -70,9 +70,9 @@ export default function Header() {
         if (shouldHide === isHidden) return
         isHidden = shouldHide
         gsap.to(headerRef.current, {
-          yPercent: shouldHide ? -110 : 0,
+          yPercent: shouldHide ? -120 : 0,
           duration: 0.6,
-          ease: shouldHide ? 'power2.in' : 'out.soft',
+          ease: shouldHide ? 'power2.in' : 'snap.out',
         })
       },
     })
@@ -81,34 +81,35 @@ export default function Header() {
   return (
     <>
       <header ref={headerRef} className="site-header">
-        <div className="gutter flex h-20 items-center justify-between gap-6">
+        <div className="gutter flex h-24 items-center justify-between gap-4">
           <TransitionLink
             href="/"
             transitionLabel="Ibad Khan"
-            className="font-display text-lg font-semibold tracking-tight"
+            className="header-pill header-logo font-display text-base font-extrabold"
           >
-            Ibad Khan<sup className="ml-0.5 font-mono text-[0.55em] font-normal">©26</sup>
+            <span className="logo-mark" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </span>
+            Ibad Khan
           </TransitionLink>
 
-          <p className="mono-label hidden md:block">
-            {LOCATION.city}, PK — <time ref={clockRef} suppressHydrationWarning>--:--</time>{' '}
+          <p className="header-pill mono-label hidden text-ink xl:inline-flex">
+            {LOCATION.city}, PK · <time ref={clockRef} suppressHydrationWarning>--:--</time>{' '}
             {LOCATION.zoneLabel}
           </p>
 
-          <div className="flex items-center gap-8">
-            <nav aria-label="Primary" className="hidden lg:block">
-              <ul className="flex gap-7 text-sm">
+          <div className="flex items-center gap-3">
+            <nav aria-label="Primary" className="header-pill header-nav hidden px-1.5 lg:inline-flex">
+              <ul className="flex gap-0.5 text-sm font-semibold">
                 {NAV.map((item) => (
                   <li key={item.label}>
-                    <TransitionLink href={item.href} className="link-draw">
-                      {item.label}
-                    </TransitionLink>
+                    <TransitionLink href={item.href}>{item.label}</TransitionLink>
                   </li>
                 ))}
                 <li>
-                  <a href={RESUME.href} download={RESUME.fileName} className="link-draw">
-                    Resume ↓
-                  </a>
+                  <a href={RESUME.href} download={RESUME.fileName}>Resume ↓</a>
                 </li>
               </ul>
             </nav>
@@ -123,6 +124,12 @@ export default function Header() {
               <span className="menu-toggle-labels" data-open={isOpen} aria-hidden="true">
                 <span>Menu</span>
                 <span>Close</span>
+              </span>
+              <span className="menu-toggle-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5">
+                  <path d="M12 4v16M4 12h16" stroke="currentColor" strokeWidth="3"
+                    strokeLinecap="round" />
+                </svg>
               </span>
               <span className="sr-only">{isOpen ? 'Close menu' : 'Open menu'}</span>
             </button>

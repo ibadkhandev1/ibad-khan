@@ -5,7 +5,12 @@ import { gsap, useGSAP } from '@/lib/gsap'
 import { EASE, REDUCED_MOTION } from '@/lib/motion-tokens'
 import { MENU_LINKS } from '@/config/content'
 import { PERSONAL_INFO, RESUME, SOCIAL_LINKS } from '@/config/personal'
+import Shape from '@/components/memphis/Shape'
 import TransitionLink from './TransitionLink'
+
+const MENU_SHAPES = ['circle', 'triangle', 'squiggle', 'half', 'plus', 'ring']
+const CLOSED = 'circle(0% at 100% 0%)'
+const OPEN = 'circle(150% at 100% 0%)'
 
 export default function Menu({ isOpen, onNavigate }) {
   const rootRef = useRef(null)
@@ -22,34 +27,42 @@ export default function Menu({ isOpen, onNavigate }) {
       hasOpened.current = true
       const tl = gsap.timeline()
       tl.set(root, { visibility: 'visible' })
-        .fromTo(root, { clipPath: 'inset(0% 0% 100% 0%)' }, {
-          clipPath: 'inset(0% 0% 0% 0%)',
-          duration: isReduced ? 0 : 0.9,
+        .fromTo(root, { clipPath: CLOSED }, {
+          clipPath: OPEN,
+          duration: isReduced ? 0 : 0.75,
           ease: EASE.transition,
         })
-        .fromTo(links, { yPercent: isReduced ? 0 : 110 }, {
+        .fromTo(links, { yPercent: isReduced ? 0 : 115, rotation: isReduced ? 0 : 4 }, {
           yPercent: 0,
-          duration: isReduced ? 0 : 1,
-          stagger: 0.05,
+          rotation: 0,
+          duration: isReduced ? 0 : 0.55,
+          ease: EASE.pop,
+          stagger: 0.045,
           onStart: () => links[0]?.focus({ preventScroll: true }),
-        }, isReduced ? 0 : '-=0.45')
-        .fromTo(fades, { opacity: 0 }, { opacity: 1, duration: 0.6, stagger: 0.08 }, '<0.2')
+        }, isReduced ? 0 : '-=0.4')
+        .fromTo(fades, { autoAlpha: 0, scale: 0.85 }, {
+          autoAlpha: 1,
+          scale: 1,
+          duration: 0.45,
+          ease: EASE.pop,
+          stagger: 0.06,
+        }, '<0.15')
       return
     }
 
     if (!hasOpened.current) return
     gsap.timeline({ onComplete: () => gsap.set(root, { visibility: 'hidden' }) })
       .to(links, {
-        yPercent: -110,
-        duration: isReduced ? 0 : 0.45,
-        stagger: 0.03,
+        yPercent: -115,
+        duration: isReduced ? 0 : 0.3,
+        stagger: 0.025,
         ease: 'power2.in',
       })
       .to(root, {
-        clipPath: 'inset(100% 0% 0% 0%)',
-        duration: isReduced ? 0 : 0.8,
+        clipPath: CLOSED,
+        duration: isReduced ? 0 : 0.55,
         ease: EASE.transition,
-      }, isReduced ? 0 : '-=0.25')
+      }, isReduced ? 0 : '-=0.15')
   }, { dependencies: [isOpen], scope: rootRef })
 
   const activeLink = MENU_LINKS[active]
@@ -89,14 +102,14 @@ export default function Menu({ isOpen, onNavigate }) {
         </nav>
 
         <aside
-          className="col-span-4 hidden flex-col justify-between lg:flex"
+          className="col-span-4 hidden flex-col items-end justify-between gap-8 lg:flex"
           aria-hidden="true"
           data-menu-fade
         >
-          <span className="font-display text-[clamp(8rem,16vw,15rem)] leading-[0.8] text-outline">
-            {String(active + 1).padStart(2, '0')}
+          <span key={active} className="menu-note menu-shape" data-c={[3, 1, 2][active % 3]}>
+            <Shape type={MENU_SHAPES[active % MENU_SHAPES.length]} />
           </span>
-          <p key={activeLink.label} className="menu-note max-w-[26ch] text-xl text-ink-muted">
+          <p key={activeLink.label} className="menu-note sticker max-w-[24ch] px-5 py-4 text-xl font-semibold">
             {activeLink.note}
           </p>
         </aside>
@@ -105,10 +118,10 @@ export default function Menu({ isOpen, onNavigate }) {
           className="col-span-12 mt-auto flex flex-wrap items-end justify-between gap-6"
           data-menu-fade
         >
-          <a href={`mailto:${PERSONAL_INFO.email}`} className="link-draw text-lg">
+          <a href={`mailto:${PERSONAL_INFO.email}`} className="link-draw text-lg font-semibold">
             {PERSONAL_INFO.email}
           </a>
-          <ul className="mono-label flex gap-6">
+          <ul className="mono-label flex flex-wrap gap-x-6 gap-y-2 text-ink">
             <li>
               <a href={RESUME.href} download={RESUME.fileName} className="link-draw">
                 Resume ↓

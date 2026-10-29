@@ -58,11 +58,15 @@ export default function Cursor() {
         root.dataset.pressed = 'false'
       }
 
+      // Pressing a link and nudging the mouse starts a native link drag, which
+      // ends in pointercancel/dragend rather than pointerup — release on all of them.
+      const RELEASE_EVENTS = ['pointerup', 'pointercancel', 'dragend', 'blur']
+
       window.addEventListener('pointermove', handleMove, { passive: true })
       document.addEventListener('pointerover', handleOver)
       document.documentElement.addEventListener('pointerleave', handleLeave)
       window.addEventListener('pointerdown', handleDown)
-      window.addEventListener('pointerup', handleUp)
+      RELEASE_EVENTS.forEach((type) => window.addEventListener(type, handleUp))
 
       return () => {
         html.classList.remove('has-cursor')
@@ -70,7 +74,7 @@ export default function Cursor() {
         document.removeEventListener('pointerover', handleOver)
         document.documentElement.removeEventListener('pointerleave', handleLeave)
         window.removeEventListener('pointerdown', handleDown)
-        window.removeEventListener('pointerup', handleUp)
+        RELEASE_EVENTS.forEach((type) => window.removeEventListener(type, handleUp))
       }
     })
   })

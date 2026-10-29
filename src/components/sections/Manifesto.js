@@ -1,11 +1,12 @@
 'use client'
 
 import { useRef } from 'react'
-import { gsap, SplitText, useGSAP } from '@/lib/gsap'
-import { MOTION_OK } from '@/lib/motion-tokens'
+import { gsap, useGSAP } from '@/lib/gsap'
+import { EASE, MOTION_OK } from '@/lib/motion-tokens'
 import { LOCATION, STATS } from '@/config/content'
 import SectionLabel from '@/components/layout/SectionLabel'
 import Counter from '@/components/motion/Counter'
+import Shape from '@/components/memphis/Shape'
 
 const FACTS = [
   { label: 'Based in', value: `${LOCATION.city}, ${LOCATION.country}` },
@@ -13,37 +14,49 @@ const FACTS = [
   { label: 'Focus', value: 'Next.js, motion, performance' },
 ]
 
-// The tension beat: a statement that resolves word by word as you scroll,
-// instead of yet another block fading up.
+const TILT = [-2.5, 1.5, -1]
+
+function InlineShape({ type, tone }) {
+  return (
+    <span className="inline-shape" data-c={tone} data-inline-shape aria-hidden="true">
+      <Shape type={type} />
+    </span>
+  )
+}
+
+// Reveal grammar: a marker sweeps in behind the claims as you read, and the
+// shapes set into the sentence pop in like stickers.
 export default function Manifesto() {
   const rootRef = useRef(null)
-  const textRef = useRef(null)
 
   useGSAP(() => {
     const mm = gsap.matchMedia()
     mm.add(MOTION_OK, () => {
-      // Words stay real text (aria: 'none'); the dim state still clears the
-      // 3:1 large-text contrast ratio, so nothing is ever unreadable.
-      const split = SplitText.create(textRef.current, { type: 'words', aria: 'none' })
-      gsap.fromTo(split.words, { color: '#66625a' }, {
-        color: (index, word) => getComputedStyle(word.parentElement).color,
-        ease: 'none',
-        stagger: 0.1,
-        scrollTrigger: {
-          trigger: textRef.current,
-          start: 'top 78%',
-          end: 'bottom 45%',
-          scrub: true,
-        },
+      gsap.utils.toArray('[data-marker]').forEach((marker) => {
+        gsap.fromTo(marker, { '--marker': '0%' }, {
+          '--marker': '100%',
+          ease: 'none',
+          scrollTrigger: { trigger: marker, start: 'top 80%', end: 'top 50%', scrub: 0.4 },
+        })
       })
-      gsap.from('[data-fact]', {
-        clipPath: 'inset(0% 0% 100% 0%)',
-        y: 20,
-        duration: 1,
-        stagger: 0.08,
-        scrollTrigger: { trigger: '[data-facts]', start: 'top 88%', once: true },
+      gsap.utils.toArray('[data-inline-shape]').forEach((shape) => {
+        gsap.from(shape, {
+          scale: 0,
+          rotation: -180,
+          duration: 0.6,
+          ease: EASE.pop,
+          scrollTrigger: { trigger: shape, start: 'top 82%', once: true },
+        })
       })
-      return () => split.revert()
+      gsap.from('[data-stat]', {
+        y: -90,
+        rotation: (index) => (index % 2 ? 14 : -14),
+        autoAlpha: 0,
+        duration: 0.7,
+        ease: 'back.out(2.2)',
+        stagger: 0.09,
+        scrollTrigger: { trigger: '[data-stats]', start: 'top 85%', once: true },
+      })
     })
   }, { scope: rootRef })
 
@@ -51,29 +64,38 @@ export default function Manifesto() {
     <section ref={rootRef} id="about" className="section" aria-labelledby="about-title">
       <div className="gutter grid grid-cols-12 gap-x-6 gap-y-10">
         <div className="col-span-12 lg:col-span-3">
-          <SectionLabel index="02" className="lg:sticky lg:top-28">Approach</SectionLabel>
+          <SectionLabel index="02" tone={0} className="lg:sticky lg:top-28">About</SectionLabel>
         </div>
         <div className="col-span-12 lg:col-span-9">
           <h2 id="about-title" className="sr-only">About Ibad Khan</h2>
-          <p ref={textRef} className="manifesto">
-            Most interfaces look finished. Few are built to last. I care about both
-            layers — the pixels you see, and <span className="text-accent">the system
-            underneath</span>: components that scale, motion that respects the frame budget,
-            and pages that load before you notice.
+          <p className="manifesto">
+            Every interface is a pile of small parts
+            <InlineShape type="circle" tone={0} />. I make each one{' '}
+            <span className="marker" data-marker data-c={3}>solid</span> — components that
+            scale, motion that respects the frame budget
+            <InlineShape type="triangle" tone={1} />, pages that load before you notice —
+            then let them <span className="marker" data-marker data-c={2}>play together</span>
+            <InlineShape type="squiggle" tone={0} />.
           </p>
 
-          <dl data-facts className="mt-20 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3">
+          <dl className="mt-16 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-3">
             {FACTS.map((fact) => (
-              <div key={fact.label} data-fact className="border-t border-hairline-strong pt-4">
+              <div key={fact.label} className="border-t-[3px] border-ink pt-4">
                 <dt className="mono-label">{fact.label}</dt>
-                <dd className="mt-2 text-lg">{fact.value}</dd>
+                <dd className="mt-2 text-lg font-semibold">{fact.value}</dd>
               </div>
             ))}
           </dl>
 
-          <ul className="mt-16 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-3">
-            {STATS.map((stat) => (
-              <li key={stat.label}>
+          <ul data-stats className="mt-16 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-3">
+            {STATS.map((stat, index) => (
+              <li
+                key={stat.label}
+                data-stat
+                data-c={index}
+                className="stat-tile"
+                style={{ rotate: `${TILT[index % TILT.length]}deg` }}
+              >
                 <Counter
                   value={stat.value}
                   decimals={stat.decimals}
@@ -81,7 +103,7 @@ export default function Manifesto() {
                   suffix={stat.suffix}
                   className="stat-value"
                 />
-                <p className="mt-2 max-w-[20ch] text-ink-muted">{stat.label}</p>
+                <p className="mt-3 max-w-[20ch] font-semibold">{stat.label}</p>
               </li>
             ))}
           </ul>

@@ -5,7 +5,7 @@ const EMBED_SRC = 'https://app.cal.com/embed/embed.js'
 
 export const CAL_LINK = process.env.NEXT_PUBLIC_CAL_LINK || 'ibad-khaan/15min'
 const NAMESPACE = 'intro'
-const MODAL_CONFIG = { layout: 'month_view', theme: 'dark' }
+const MODAL_CONFIG = { layout: 'month_view', theme: 'light' }
 
 const queue = (target, args) => target.q.push(args)
 
@@ -54,10 +54,10 @@ export const initCal = () => {
   cal('init', NAMESPACE, { origin: 'https://cal.com' })
   api = cal.ns[NAMESPACE]
   api('ui', {
-    theme: 'dark',
+    theme: 'light',
     hideEventTypeDetails: false,
     layout: 'month_view',
-    cssVarsPerTheme: { dark: { 'cal-brand': '#ff5b1f' } },
+    cssVarsPerTheme: { light: { 'cal-brand': '#1b1a17' } },
   })
   return api
 }

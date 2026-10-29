@@ -1,4 +1,4 @@
-import { Bricolage_Grotesque, Inter, JetBrains_Mono } from 'next/font/google'
+import { Anybody, DM_Mono, Gabarito } from 'next/font/google'
 import Script from 'next/script'
 import 'lenis/dist/lenis.css'
 import './globals.css'
@@ -11,24 +11,27 @@ import Footer from '@/components/layout/Footer'
 import Cursor from '@/components/layout/Cursor'
 import Preloader from '@/components/layout/Preloader'
 import ChatWidget from '@/components/chat/ChatWidget'
+import { PALETTE_BOOT_SCRIPT } from '@/config/palettes'
 
-const display = Bricolage_Grotesque({
-  variable: '--font-bricolage',
+// Anybody's wdth axis (50–150) is a live prop in the hero, so it ships variable.
+const display = Anybody({
+  variable: '--font-anybody',
   subsets: ['latin'],
-  axes: ['wdth', 'opsz'],
+  axes: ['wdth'],
+  style: ['normal', 'italic'],
   display: 'swap',
 })
 
-const inter = Inter({
-  variable: '--font-inter',
+const text = Gabarito({
+  variable: '--font-gabarito',
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
   display: 'swap',
 })
 
-const mono = JetBrains_Mono({
-  variable: '--font-jetbrains-mono',
+const mono = DM_Mono({
+  variable: '--font-dm-mono',
   subsets: ['latin'],
+  weight: ['400', '500'],
   display: 'swap',
 })
 
@@ -76,16 +79,19 @@ export const metadata = {
 }
 
 export const viewport = {
-  themeColor: '#0b0b0a',
-  colorScheme: 'dark',
+  themeColor: '#f7f0e3',
+  colorScheme: 'light',
 }
 
 export default function RootLayout({ children }) {
-  const fontVars = `${display.variable} ${inter.variable} ${mono.variable}`
+  const fontVars = `${display.variable} ${text.variable} ${mono.variable}`
 
   return (
-    <html lang="en" className={`${fontVars} is-loading antialiased`}>
+    <html lang="en" className={`${fontVars} is-loading antialiased`} suppressHydrationWarning>
       <body>
+        <Script id="palette-boot" strategy="beforeInteractive">
+          {PALETTE_BOOT_SCRIPT}
+        </Script>
         <noscript>
           <style>{'.preloader{display:none!important}html.is-loading{overflow:auto}'}</style>
         </noscript>
@@ -101,7 +107,6 @@ export default function RootLayout({ children }) {
         </TransitionProvider>
         <Cursor />
         <Preloader />
-        <div className="grain" aria-hidden="true" />
         <JsonLd />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-YWRZDLSG2Q"

@@ -1,22 +1,25 @@
-// Single source of truth for motion. Entrances ease out softly, route-level
-// transitions use the heavier expo curve, UI feedback stays snappy.
+// Single source of truth for motion. Persona: snap, shuffle, wiggle — short
+// durations, springy overshoot, tight staggers. Route-level moves are the only
+// slower beats, and even they land with a snap.
 export const DURATION = {
-  xs: 0.35,
-  sm: 0.7,
-  md: 1.1,
-  lg: 1.6,
+  xs: 0.2,
+  sm: 0.45,
+  md: 0.8,
+  lg: 1.1,
 }
 
 export const EASE = {
-  enter: 'out.soft',
-  transition: 'expo.inout.custom',
-  ui: 'power2.out',
+  enter: 'snap.out',
+  pop: 'back.out(1.7)',
+  wiggle: 'elastic.out(1, 0.5)',
+  transition: 'snap.inout',
+  ui: 'power3.out',
 }
 
 export const STAGGER = {
-  tight: 0.04,
-  base: 0.07,
-  loose: 0.1,
+  tight: 0.02,
+  base: 0.035,
+  loose: 0.05,
 }
 
 export const MOTION_OK = '(prefers-reduced-motion: no-preference)'

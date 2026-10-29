@@ -1,10 +1,11 @@
 # Ibad Khan — Portfolio
 
-Personal site of Ibad Khan, frontend developer. Built around one idea: **design on the
-surface, engineering underneath.** A cursor lens reveals the blueprint (grid, outlined
-type, real CSS values) under the finished hero.
+Personal site of Ibad Khan, frontend developer. Built around one idea: **props in, play
+out.** The whole site is one Memphis component kit, and the hero is a live component: its
+props panel re-shuffles the composition (`seed`), stretches the name (`wdth`) and re-skins
+the entire site (`palette`).
 
-Next.js 16 (App Router) · React 19 · GSAP · Lenis · OGL (WebGL) · Tailwind CSS v4
+Next.js 16 (App Router) · React 19 · GSAP · Lenis · Tailwind CSS v4
 
 ## Run it
 
@@ -31,6 +32,8 @@ npm run build && npm start
 | Chat greeting and suggestions | `src/lib/chat.js` (`CHAT_CONFIG`) |
 | Chat backend | `src/lib/chat.js` → `sendChatMessage()` |
 | Resume PDF | `public/ibad-khan-resume.pdf` (download name set in `RESUME` in `personal.js`) |
+| Palettes (the hero's `palette` prop) | `src/config/palettes.js` + `[data-palette]` blocks in `globals.css` |
+| Hero shapes (types, sizes, depth) | `SLOTS` in `src/lib/composition.js` |
 
 ### Project pages and images
 
@@ -60,12 +63,13 @@ string. It currently returns a placeholder. Replace it with a call to your own r
 src/
   app/                 routes, layout (fonts, metadata, providers), template (route-in)
     services/[slug]/   one static, SEO-optimised page per service
-  lib/                 gsap setup, lenis, motion tokens, lens, intro signal, cal, chat
+  lib/                 gsap setup, lenis, motion tokens, palette store, seeded
+                       composition, intro signal, cal, chat
   components/
     layout/            Header, Menu, Footer, Cursor, Preloader, page transitions
     motion/            SplitReveal, Magnetic, Marquee, Counter
     sections/          Hero, Manifesto, Work, Principles, Experience, Services, Stack
-    webgl/             SignalField (OGL contour shader)
+    memphis/           Shape — the primitives every decorative mark is built from
     booking/           BookCallButton (loads Cal.com on hover/focus, opens its popup)
     chat/              ChatWidget
 docs/                  COMMIT_SHEET.md, QA_REPORT.md
@@ -83,12 +87,14 @@ the Vercel project settings.
 
 **Title:** Ibad Khan — Frontend Developer
 
-**Description:** A portfolio built on one idea: design on the surface, engineering
-underneath. An X-ray lens follows the cursor and reveals the blueprint of the page,
-including grid, outlined type and the CSS that produced it, over a live WebGL contour
-field.
+**Description:** A frontend developer's portfolio built as one Memphis component kit. The
+hero is a live component with a props panel: shuffle the seed and twenty cut-paper
+primitives squash, recolour and snap into a new composition; drag `wdth` and the name
+stretches on its variable axis; pick a palette and the whole site re-skins through its
+design tokens.
 
-**Tech:** Next.js, React, GSAP, ScrollTrigger, SplitText, Lenis, WebGL (OGL), Tailwind CSS
+**Tech:** Next.js, React, GSAP (ScrollTrigger, SplitText, ScrambleText, DrawSVG,
+Physics2D), Lenis, Tailwind CSS v4, variable fonts
 
-**Highlights:** X-ray cursor lens · pinned horizontal work reel with velocity skew ·
-curtain page transitions
+**Highlights:** live `<Hero />` props panel (seed · wdth · palette) · palette-tile route
+transitions · confetti sticker finale

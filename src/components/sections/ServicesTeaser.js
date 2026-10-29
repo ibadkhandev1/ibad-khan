@@ -10,7 +10,7 @@ export default function ServicesTeaser() {
       <div className="gutter">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <SectionLabel index="06">Services</SectionLabel>
+            <SectionLabel index="06" tone={1}>Services</SectionLabel>
             <SplitReveal
               id="services-title"
               className="display mt-4 max-w-[12ch] text-[clamp(3rem,8vw,7.5rem)]"
@@ -20,6 +20,7 @@ export default function ServicesTeaser() {
           </div>
           <Link href="/services" transitionLabel="Services" className="btn">
             All services
+            <span aria-hidden="true">→</span>
           </Link>
         </div>
         <div className="mt-16">

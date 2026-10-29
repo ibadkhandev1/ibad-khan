@@ -6,8 +6,8 @@ import Experience from '@/components/sections/Experience'
 import ServicesTeaser from '@/components/sections/ServicesTeaser'
 import Stack from '@/components/sections/Stack'
 
-// Narrative arc: Hook (hero X-ray) → Tension (manifesto) → Reveal (work,
-// principles) → Proof (experience, services, toolkit) → Invitation (footer).
+// One component kit, played top to bottom: the live <Hero /> (props panel) →
+// About → Work reel → Principles → Changelog → Services → Toolkit → finale.
 export default function Home() {
   return (
     <>

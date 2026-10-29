@@ -3,16 +3,17 @@
 import { useRef } from 'react'
 import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap'
 import { MOTION_OK } from '@/lib/motion-tokens'
+import Shape from '@/components/memphis/Shape'
+
+const MARKS = ['circle', 'triangle', 'plus', 'half', 'square']
 
 function Group({ items, outline, hidden }) {
   return (
     <ul className="marquee-group" aria-hidden={hidden || undefined}>
-      {items.map((item) => (
+      {items.map((item, index) => (
         <li key={item} className={`marquee-item ${outline ? 'text-outline' : ''}`}>
           {item}
-          <svg className="marquee-mark" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9 4.9 19.1" />
-          </svg>
+          <Shape type={MARKS[index % MARKS.length]} className="marquee-mark" />
         </li>
       ))}
     </ul>

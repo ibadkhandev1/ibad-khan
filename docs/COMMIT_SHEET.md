@@ -1,48 +1,76 @@
-# Commit Sheet — ibadkhan.dev
+# Commit Sheet — ibadkhan.dev (Memphis revamp, 2026-10-29)
 
-## Reference board
+**TRUTH SENTENCE:** A frontend developer in Hyderabad who builds every interface out of
+small, reusable parts — and makes them move.
 
-| Reference | What it does | Technique taken (not copied) |
-|---|---|---|
-| Hubtown (Unseen Studio), SOTD 2026 | One lit hero object + cursor reveal | Cursor-reveal as the signature interaction |
-| By-Kin / Mat Voyce, SOTD + Dev Award | Next.js + GSAP-only motion system, kinetic type | One motion engine, type-led layout |
-| fromanother.love, SOTD May 2026 | Next.js + GSAP + WebGL as atmosphere | WebGL behind the content, never in front of it |
-| Iventions, SOTD + Dev Award | WebGL as atmosphere, not spectacle | Shader field that pauses off-screen |
-| Lando Norris (OFF+BRAND), SOTM Dec 2025 | Aggressive kinetic type, bold transitions | Oversized condensed display type, curtain route transitions |
-| Lusion v3 / Zentry | Scroll-scrubbed storytelling | Pinned horizontal work reel scrubbed by scroll |
+**BIG IDEA:** Props in, play out. The whole site is one Memphis component kit; the hero is a
+live component you re-render by changing its props.
 
-## The idea
+**AXIS:** System (a living component library).
 
-**BIG IDEA:** Design on the surface, engineering underneath. The cursor is an X-ray.
+**METAPHOR → INTERACTION:** A component and its controls panel (Storybook-style). The
+visitor changes real props — `seed`, `wdth`, `palette` — and watches the page re-render.
+`palette` is a design token swap, so it re-skins the entire site, not just the hero.
 
-**METAPHOR → INTERACTION:** Every finished surface has a blueprint layer under it. A
-circular lens follows the cursor and reveals that layer: outlined type, a 48px grid,
-the real CSS values and the HTML tags. On touch devices the lens drifts on its own.
+## Signature moment — Shuffle
 
-**SIGNATURE MOMENT:** Moving the cursor over the giant "Ibad / Khan" and seeing the
-outlined glyphs, baselines and `font-size: clamp(...)` annotation appear inside the lens,
-over a topographic WebGL field that bends toward the pointer.
+```
+TRIGGER:        Shuffle button, or the S key while the hero is on screen
+BEATS:          1. 0.00s  shapes squash to 35% in random order (22 ms stagger)
+                2. 0.13s  each recolours while small
+                3. 0.13s  each snaps to its new spot / angle / scale (back.out 1.7, 0.62s)
+                4. 0.00s  the name's wdth axis springs to a new width (elastic, 1s)
+                5. 0.10s  readout <Hero … seed={n} /> flashes the changed prop
+PEAK:           ~0.4s: half the pile mid-flight, name overshooting its new width
+RESOLUTION:     composition settles; pointer parallax resumes from the new layout
+TOUCH VERSION:  same button; parallax off; 12 of 20 shapes on phones
+REDUCED-MOTION: instant re-layout and width change, no tween; still a new composition
+LOW-END:        drop shadows thin to 3px on phones; extra shapes hidden under 768px
+```
+
+**SECONDARY MOMENTS:**
+1. Palette swatches: one click re-skins the site (stored per visitor in localStorage).
+2. Footer sticker: reach for "Write to me" and it throws a burst of Physics2D confetti.
+
+**RENDER TECH + WHY:** DOM + SVG + GSAP. The idea is components and tokens, so the
+composition *is* the DOM; no canvas or WebGL needed. The old OGL contour field was removed.
+
+**NARRATIVE STRUCTURE:** A kit opened in order: live `<Hero />` → About → Work reel
+(pinned, scrubbed) → Principles (sticky stack) → Changelog → Services → Toolkit → finale.
 
 ## Art direction
 
-- **Palette:** ink `#0B0B0A`, bone `#ECE7DC`, graphite `#141412`, accent signal orange `#FF5B1F`
-- **Type:** Bricolage Grotesque (display, `wdth` 78–88%, tight tracking), Inter (text),
-  JetBrains Mono (labels, annotations)
-- **Grid:** 12 columns, `clamp(1rem, 3.2vw, 3rem)` gutter. Broken by the hero name
-  (left / right split) and the horizontal work reel.
-- **Texture:** animated SVG grain at 6%, topographic contour shader, blueprint grid.
+- **Palette "Bel Air '82"** (after Peter Shire): stucco `#F7F0E3`, ink `#1B1A17`, fills
+  teal `#22B8A6`, tomato `#FF6A45`, lilac `#B7A2FF`, sun `#FFCF3F`; text accent `#C8321E`.
+  Alternates: Arcade, Sorbet. Every fill keeps ink text ≥ 4.5:1.
+- **Type:** Anybody (variable `wdth` 50–150, display; the `wdth` axis is a live prop),
+  Gabarito (text), DM Mono (labels, props readout).
+- **Grid:** 12 columns, `clamp(1rem, 3.2vw, 3rem)` gutter. Broken by the hero shape field,
+  the tilted work frames and the crossing marquee bands.
+- **Texture:** one printed dot screen (22px) on paper; hard 3px ink outlines and offset
+  shadows on every sticker.
+- **Imagery:** Memphis primitives only (no stock); project screenshots in the reel.
 
-## Motion personality
+## Motion persona — snap, shuffle, wiggle
 
-Heavy and inertial for transitions (`expo.inout.custom`), soft for entrances
-(`out.soft`), snappy for UI (`power2.out`). Only transform, opacity and clip-path are
-animated. Lenis is the only smooth-scroll engine.
+Durations 0.2 / 0.45 / 0.8s; `snap.out` (custom), `back.out(1.7)`, `elastic.out(1, 0.5)`;
+staggers 0.02–0.05. Reveal grammars: masked line split (headings), scale-from-object pop
+(hero, inline shapes), marker sweep (About), circle clip (work covers), DrawSVG stroke
+(principles), ScrambleText (changelog versions), bounce drop (toolkit cards).
 
-## Sections (narrative arc)
+**SOUND:** none.
 
-1. **Hook:** X-ray hero + WebGL contour field
-2. **Tension:** manifesto that resolves word by word on scroll
-3. **Reveal:** pinned horizontal work reel with per-card lens and velocity skew
-4. **Reveal:** principles as a sticky card stack
-5. **Proof:** experience, services, toolkit marquee
-6. **Invitation:** footer finale, Cal.com booking modal, chat
+**DEFAULTS USED:**
+- Six-colour palette (Memphis requires polychrome; capped at four swappable fills).
+- Hard offset shadows (they are the cut-paper language of the style, not a trend default).
+- Pinned horizontal work reel kept from the previous build (the projects are real; the reel
+  now carries the kit's tilt and velocity wiggle instead of distortion).
+
+## Fingerprint diff vs Wobbly Ensemble (last entry, also Memphis)
+
+axis Toy → System · render DOM+Canvas2D+SVG → DOM+SVG · palette flamingo-led → Bel Air
+teal/tomato/lilac with live swap · background colour-field chapters → constant stucco +
+ink finale · display Bagel Fat One → Anybody (wdth as prop) · layout collage grid →
+component spec board · navigation physics toy → props panel · persona bounce/fling/pop →
+snap/shuffle/wiggle · signature shapes rain and pile → seeded re-render via props.
+8 of 10 fields differ; no references repeated.

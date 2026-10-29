@@ -159,7 +159,7 @@ export const MARQUEE_PRIMARY = ['React', 'Next.js', 'JavaScript', 'Tailwind CSS'
 export const MARQUEE_SECONDARY = ['GSAP', 'Motion', 'Lenis', 'WebGL', 'Performance', 'Figma']
 
 export const MENU_LINKS = [
-  { label: 'Index', href: '/', note: 'Back to the top — the X-ray hero.' },
+  { label: 'Index', href: '/', note: 'Back to the top — go shuffle the hero.' },
   { label: 'Work', href: '/#work', note: 'Seven selected builds, scroll sideways.' },
   { label: 'Experience', href: '/#experience', note: 'Nanolix Digital and Techriv Solutions.' },
   { label: 'Services', href: '/services', note: 'What I can build for you.' },

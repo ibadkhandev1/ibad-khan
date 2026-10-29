@@ -21,15 +21,17 @@ export default function MediaReveal({
     mm.add(MOTION_OK, () => {
       const frame = rootRef.current.querySelector('[data-media-frame]')
       const img = rootRef.current.querySelector('img')
-      gsap.from(frame, {
-        clipPath: 'inset(100% 0% 0% 0% round 1rem)',
-        duration: 1.4,
-        ease: 'expo.inout.custom',
+      // Negative side insets keep the frame's hard shadow out of the wipe.
+      gsap.fromTo(frame, { clipPath: 'inset(100% -20px -20px -20px)' }, {
+        clipPath: 'inset(0% -20px -20px -20px)',
+        clearProps: 'clipPath',
+        duration: 0.9,
+        ease: 'snap.inout',
         scrollTrigger: { trigger: rootRef.current, start: 'top 88%', once: true },
       })
       gsap.from(img, {
-        scale: 1.18,
-        duration: 1.8,
+        scale: 1.15,
+        duration: 1.2,
         scrollTrigger: { trigger: rootRef.current, start: 'top 88%', once: true },
       })
       if (!parallax) return
