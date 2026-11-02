@@ -11,6 +11,7 @@ import Magnetic from '@/components/motion/Magnetic'
 import BookCallButton from '@/components/booking/BookCallButton'
 
 const SOCIALS = [
+  { label: 'GitHub', href: SOCIAL_LINKS.github },
   { label: 'LinkedIn', href: SOCIAL_LINKS.linkedin },
   { label: 'Upwork', href: SOCIAL_LINKS.upwork },
 ]
