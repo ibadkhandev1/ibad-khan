@@ -115,10 +115,6 @@ export default function Menu({ isOpen, onNavigate }) {
               </a>
             </li>
             <li>
-              <a href={SOCIAL_LINKS.github} target="_blank" rel="me noopener"
-                className="link-draw">GitHub</a>
-            </li>
-            <li>
               <a href={SOCIAL_LINKS.linkedin} target="_blank" rel="me noopener"
                 className="link-draw">LinkedIn</a>
             </li>

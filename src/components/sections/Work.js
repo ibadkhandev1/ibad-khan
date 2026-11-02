@@ -6,7 +6,6 @@ import { gsap, useGSAP } from '@/lib/gsap'
 import { createLens } from '@/lib/lens'
 import { DESKTOP, FINE_POINTER, MOTION_OK } from '@/lib/motion-tokens'
 import { PROJECTS } from '@/config/content'
-import { SOCIAL_LINKS } from '@/config/personal'
 import SectionLabel from '@/components/layout/SectionLabel'
 import TransitionLink from '@/components/layout/TransitionLink'
 import SplitReveal from '@/components/motion/SplitReveal'
@@ -38,7 +37,6 @@ function ProjectCard({ project, index }) {
               <ProjectArt index={index} letter={project.title[0]} variant="xray" />
               <ul className="work-spec">
                 {project.tech.map((tech) => <li key={tech}>{tech}</li>)}
-                <li>/{project.repo}</li>
               </ul>
             </div>
           </div>
@@ -154,22 +152,6 @@ export default function Work() {
           {PROJECTS.map((project, index) => (
             <ProjectCard key={project.slug} project={project} index={index} />
           ))}
-          <li className="work-card work-card--end">
-            <a
-              href={SOCIAL_LINKS.github}
-              target="_blank"
-              rel="me noopener"
-              className="work-more"
-              data-cursor="view"
-              data-cursor-label="GitHub ↗"
-            >
-              <span className="mono-label">More on GitHub</span>
-              <span className="display text-[clamp(2.5rem,4vw,4rem)]">
-                Everything else lives in the repos.
-              </span>
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
-          </li>
         </ul>
       </div>
     </section>

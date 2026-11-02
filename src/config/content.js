@@ -1,5 +1,3 @@
-import { SOCIAL_LINKS } from '@/config/personal'
-
 export const LOCATION = {
   city: 'Hyderabad',
   country: 'Pakistan',
@@ -7,112 +5,97 @@ export const LOCATION = {
   zoneLabel: 'PKT',
 }
 
-// wa.me needs the number in international format without "+" or spaces.
 export const WHATSAPP = { display: '+92 340 8575895', href: 'https://wa.me/923408575895' }
 
 export const STATS = [
   { value: 2.5, decimals: 1, suffix: '+', label: 'Years shipping production UI' },
   { value: 2, pad: 2, label: 'Studios shipped with' },
-  { value: 7, pad: 2, label: 'Selected builds below' },
+  { value: 3, pad: 2, label: 'Selected builds below' },
 ]
 
-// Projects power the "Selected work" reel and the /work/[slug] product pages.
-// Images live in /public/work/<slug>/ with fixed names (cover, desktop-01,
-// desktop-02, mobile-01, mobile-02). The current files are generated demos —
-// replace them with real screenshots (same names, any size; 16:10 for desktop
-// and cover, 1:2 for mobile) and update the alt text below.
-// Optional per project: `live` (deployed URL) and `year`.
+// These are the latest real desktop and iPhone captures supplied for each site.
 const PROJECT_DATA = [
   {
-    slug: 'ai-fitness-coach',
-    title: 'AI Fitness Coach',
-    description:
-      'Full-stack AI fitness platform — personalised plans, habit tracking, coach chat '
-      + 'and progress insights.',
-    highlights: ['Personalised plans', 'Habit tracking', 'AI coach chat', 'Progress insights'],
-    tech: ['Next.js', 'MongoDB', 'AI SDK'],
-    repo: 'liquad-assests',
+    slug: 'wobbly',
+    title: 'Wobbly Ensemble',
+    description: 'A lively brand and web studio site built around playful motion, bold shapes, and a tactile visual system.',
+    highlights: ['Playful visual identity', 'Responsive studio experience', 'Interactive shape system'],
+    tech: ['Next.js', 'GSAP', 'CSS'],
+    live: 'https://wobbly-ensemble.vercel.app/',
+    imageDir: 'wobbly',
+    imageFiles: {
+      cover: 'wobbly-cover-mockup.png',
+      desktop: ['wobbly-case-studies.png', 'wobbly-cover.png'],
+      mobile: ['wobbly-mobile-home.png', 'wobbly-mobile-case.png'],
+    },
   },
   {
-    slug: 'power-ai',
-    title: 'Power AI',
-    description:
-      'Full-screen AI product landing page with a video background, liquid-glass UI and '
-      + 'an animated brand marquee.',
-    highlights: ['Full-screen video background', 'Liquid-glass UI', 'Animated brand marquee'],
-    tech: ['React', 'TypeScript', 'Tailwind'],
-    repo: 'power-ai',
+    slug: 'hone',
+    title: 'Hone Barbers',
+    description: 'A cinematic barbershop website with a dark editorial palette, tactile typography, and a focused booking journey.',
+    highlights: ['Editorial art direction', 'Responsive barbershop experience', 'Booking-first interface'],
+    tech: ['Next.js', 'JavaScript', 'CSS'],
+    live: 'https://hone-babers-cut.vercel.app/',
+    imageDir: 'horn',
+    imageFiles: {
+      cover: 'hone-cover-mockup.png',
+      desktop: ['hone-ritual.png', 'hone-babers-cut.vercel.app_ (5).png'],
+      mobile: ['hone-mobile-home.png', 'hone-mobile-ritual.png'],
+    },
   },
   {
-    slug: 'securify',
-    title: 'Securify',
-    description:
-      'Security-focused web app on a modern TypeScript frontend and production-ready '
-      + 'Next.js patterns.',
-    highlights: ['Security-focused product UI', 'Typed TypeScript frontend', 'Next.js patterns'],
-    tech: ['Next.js', 'TypeScript', 'Tailwind'],
-    repo: 'securify',
-  },
-  {
-    slug: 'landify',
-    title: 'Landify',
-    description: 'Landing page built around smooth GSAP choreography and clean UI patterns.',
-    highlights: ['GSAP choreography', 'Clean, reusable UI patterns'],
-    tech: ['React', 'Tailwind', 'GSAP'],
-    repo: 'Landify',
-  },
-  {
-    slug: 'heroui',
-    title: 'heroUI',
-    description: 'A kit of reusable hero sections, each with its own animation pattern.',
-    highlights: ['Reusable hero sections', 'A distinct animation pattern per hero'],
-    tech: ['Next.js', 'Tailwind', 'Motion'],
-    repo: 'heroUI',
-  },
-  {
-    slug: 'codelace',
-    title: 'Codelace',
-    description: 'Full platform redesign focused on UX, modern aesthetics and responsiveness.',
-    highlights: ['Full platform redesign', 'UX-first layouts', 'Responsive at every breakpoint'],
-    tech: ['React', 'CSS', 'Figma'],
-    repo: 'Codelace-redesign',
-  },
-  {
-    slug: 'weather-api',
-    title: 'Weather API',
-    description: 'Real-time weather dashboard on the OpenWeatherMap API with dynamic theming.',
-    highlights: ['Real-time OpenWeatherMap data', 'Theme that follows the weather'],
-    tech: ['JavaScript', 'REST API', 'CSS'],
-    repo: 'weatherAPI',
+    slug: 'offset',
+    title: 'Offset',
+    description: 'An experimental design journal that turns misregistration, typography, and scroll into the editorial experience.',
+    highlights: ['Experimental editorial layout', 'Typographic interaction', 'Responsive journal experience'],
+    tech: ['Next.js', 'Motion', 'CSS'],
+    live: 'https://offset-brown.vercel.app/',
+    imageDir: 'offset',
+    imageFiles: {
+      cover: 'offset-cover-mockup.png',
+      desktop: ['offset-register.png', 'offset-editorial.png'],
+      mobile: ['offset-mobile-home.png', 'offset-mobile-register.png'],
+    },
   },
 ]
 
-const DESKTOP_SIZE = { width: 1600, height: 1000 }
-const MOBILE_SIZE = { width: 750, height: 1500 }
+const IMAGE_SIZES = {
+  'wobbly-cover-mockup.png': { width: 1536, height: 1024 },
+  'wobbly-cover.png': { width: 1903, height: 1185 },
+  'wobbly-case-studies.png': { width: 1906, height: 1199 },
+  'wobbly-studio-screen.png': { width: 1905, height: 1199 },
+  'wobbly-mobile-home.png': { width: 1320, height: 2868 },
+  'wobbly-mobile-case.png': { width: 1320, height: 2868 },
+  'hone-cover-mockup.png': { width: 1536, height: 1024 },
+  'hone-ritual.png': { width: 3740, height: 2036 },
+  'hone-babers-cut.vercel.app_ (5).png': { width: 3740, height: 2036 },
+  'hone-menu-screen.png': { width: 3740, height: 2036 },
+  'hone-mobile-home.png': { width: 1320, height: 2868 },
+  'hone-mobile-ritual.png': { width: 1320, height: 2868 },
+  'offset-cover-mockup.png': { width: 1536, height: 1024 },
+  'offset-register.png': { width: 3740, height: 2036 },
+  'offset-editorial.png': { width: 3740, height: 2036 },
+  'offset-mobile-home.png': { width: 1320, height: 2868 },
+  'offset-mobile-register.png': { width: 1320, height: 2868 },
+}
 
-const projectImages = ({ slug, title }) => {
-  const shot = (file, label, size) => ({
-    src: `/work/${slug}/${file}.webp`,
+const projectImages = ({ title, imageDir, imageFiles }) => {
+  const shot = (file, label) => ({
+    src: `/work/${imageDir}/${file}`,
     alt: `${title} — ${label}`,
-    ...size,
+    ...IMAGE_SIZES[file],
   })
+
   return {
-    cover: shot('cover', 'home page', DESKTOP_SIZE),
-    desktop: [
-      shot('desktop-01', 'main screen', DESKTOP_SIZE),
-      shot('desktop-02', 'features', DESKTOP_SIZE),
-    ],
-    mobile: [
-      shot('mobile-01', 'mobile home', MOBILE_SIZE),
-      shot('mobile-02', 'mobile list', MOBILE_SIZE),
-    ],
+    cover: shot(imageFiles.cover, 'home page'),
+    desktop: imageFiles.desktop.map((file, index) => shot(file, index ? 'secondary screen' : 'main screen')),
+    mobile: imageFiles.mobile.map((file, index) => shot(file, index ? 'responsive screen' : 'mobile home screen')),
   }
 }
 
 export const PROJECTS = PROJECT_DATA.map((project) => ({
   ...project,
   path: `/work/${project.slug}`,
-  href: `${SOCIAL_LINKS.github}/${project.repo}`,
   images: projectImages(project),
 }))
 
@@ -146,21 +129,18 @@ export const EXPERIENCES = [
 ]
 
 export const STACK_GROUPS = [
-  {
-    title: 'Build',
-    items: ['React', 'Next.js', 'JavaScript (ES6+)', 'HTML / CSS', 'Tailwind CSS', 'Bootstrap'],
-  },
+  { title: 'Build', items: ['React', 'Next.js', 'JavaScript (ES6+)', 'HTML / CSS', 'Tailwind CSS', 'Bootstrap'] },
   { title: 'Motion', items: ['GSAP', 'Motion', 'Lenis', 'WebGL (OGL)'] },
   { title: 'Content', items: ['Headless WordPress', 'WordPress REST API', 'REST APIs', 'jQuery'] },
-  { title: 'Craft', items: ['Responsive design', 'Web performance', 'Figma', 'Git / GitHub'] },
+  { title: 'Craft', items: ['Responsive design', 'Web performance', 'Figma', 'Git'] },
 ]
 
 export const MARQUEE_PRIMARY = ['React', 'Next.js', 'JavaScript', 'Tailwind CSS', 'WordPress']
 export const MARQUEE_SECONDARY = ['GSAP', 'Motion', 'Lenis', 'WebGL', 'Performance', 'Figma']
 
 export const MENU_LINKS = [
-  { label: 'Index', href: '/', note: 'Back to the top — the X-ray hero.' },
-  { label: 'Work', href: '/#work', note: 'Seven selected builds, scroll sideways.' },
+  { label: 'Index', href: '/', note: 'Back to the top — go shuffle the hero.' },
+  { label: 'Work', href: '/#work', note: 'Three selected builds, scroll sideways.' },
   { label: 'Experience', href: '/#experience', note: 'Nanolix Digital and Techriv Solutions.' },
   { label: 'Services', href: '/services', note: 'What I can build for you.' },
   { label: 'Blog', href: '/blog', note: 'Notes on React, Next.js and performance.' },

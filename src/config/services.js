@@ -52,7 +52,7 @@ export const SERVICES = [
             grown messy and every small change breaks something else. Or a product needs a
             few hard pieces built properly: a multi-step form, a dashboard with filters, a
             chat panel.`,
-          txt`I’ve done all three. On the AI Fitness Coach project I built the plan views,
+          txt`I’ve done all three. On the Wobbly Ensemble project I built the responsive studio experience,
             habit tracking and coach chat in React on top of Next.js. At Nanolix Digital I
             write components that get reused across client sites, so I think about props
             and naming before I write the first line.`,
@@ -91,7 +91,7 @@ export const SERVICES = [
     faqs: [
       {
         q: 'Do you work with TypeScript?',
-        a: txt`Yes. Some of my recent projects, like Power AI and Securify, are written in
+        a: txt`Yes. Recent projects like Wobbly Ensemble and Offset are written in
           TypeScript. If your codebase is plain JavaScript I’ll match it instead of pushing a
           migration you didn’t ask for.`,
       },
@@ -221,7 +221,7 @@ export const SERVICES = [
           txt`A lot of my work is single landing pages: product launches, service pages,
             campaign pages. I keep each one focused on a single action, build the sections so
             you can reorder them later, and make sure the page stays quick even with video
-            or animation on it. Power AI and Landify on the home page are two examples.`,
+            or animation on it. Wobbly Ensemble and Offset on the home page are two examples.`,
         ],
       },
       {

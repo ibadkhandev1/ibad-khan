@@ -120,14 +120,6 @@ export default async function ProjectPage({ params }) {
                     Live site ↗
                   </a>
                 )}
-                <a
-                  href={project.href}
-                  target="_blank"
-                  rel="noopener"
-                  className="link-draw"
-                >
-                  Source on GitHub ↗
-                </a>
               </dd>
             </div>
           </dl>

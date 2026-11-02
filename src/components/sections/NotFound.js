@@ -22,7 +22,7 @@ const useRequestedPath = () => {
 }
 
 const WAYS_BACK = [
-  { label: 'Selected work', href: '/#work', note: 'Seven builds, scroll sideways' },
+  { label: 'Selected work', href: '/#work', note: 'Three builds, scroll sideways' },
   { label: 'Services', href: '/services', note: 'What I can build for you' },
   { label: 'Blog', href: '/blog', note: 'Notes on React and Next.js' },
   { label: 'Contact', href: '#contact', note: 'Ask about a project' },
