@@ -31,6 +31,26 @@ export const SEO_CONFIG = {
 
 export const BLOG_POSTS = [
   {
+    id: 'ai-coding-agents-workflow',
+    title: 'How to Use AI Coding Agents for Web Development in 2026',
+    slug: 'ai-coding-agents-web-development-workflow-2026',
+    excerpt: 'A practical workflow for using AI coding agents to build React and Next.js projects while keeping code quality, security, and accessibility in check.',
+    category: 'AI & Development',
+    readTime: 6,
+    date: '2026-11-03',
+    keywords: ['AI coding agents', 'AI web development', 'React', 'Next.js', 'code review'],
+  },
+  {
+    id: 'ai-search-seo',
+    title: 'AI Search SEO in 2026: How to Make Your Website Discoverable',
+    slug: 'ai-search-seo-website-discoverability-2026',
+    excerpt: 'Learn how to improve your website for Google Search and AI-powered discovery with helpful content, technical SEO, and measurable performance.',
+    category: 'SEO',
+    readTime: 6,
+    date: '2026-11-03',
+    keywords: ['AI search SEO', 'AI Overviews', 'website SEO', 'technical SEO', 'Next.js'],
+  },
+  {
     id: 'react-best-practices',
     title: 'React Best Practices: Building High-Performance Components',
     slug: 'react-best-practices-high-performance-components',

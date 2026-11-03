@@ -1,6 +1,7 @@
 import { BLOG_POSTS } from '@/config/seo';
 import Link from '@/components/layout/TransitionLink';
 import FadeContent from '@/components/ui/FadeContent';
+import CodeBlock from '@/components/ui/CodeBlock';
 import ReactMarkdown from 'react-markdown';
 import { use } from 'react';
 
@@ -37,6 +38,82 @@ export async function generateMetadata({ params }) {
 
 // Blog post content templates
 const BLOG_CONTENT = {
+  'ai-coding-agents-web-development-workflow-2026': {
+    content: `AI coding agents can inspect a project, propose changes, and run checks. Used well, they can shorten the distance between an idea and a working feature. The developer still owns the requirements, the review, and the result.
+
+The interest is substantial: in the [2026 Stack Overflow Developer Survey](https://survey.stackoverflow.co/2026/ai), 73% of respondents who use coding assistants or agents reported using them daily. That is a signal of adoption, not proof that every AI-generated change is correct or faster to ship.
+
+## Start with a specific outcome
+
+A useful request describes what a user should be able to do, where the change belongs, and how success will be checked. Instead of asking an agent to “improve the dashboard,” ask it to add a filter that works with keyboard input, preserves the existing URL state, and handles an empty result.
+
+Include the framework version, relevant files, design constraints, and any commands the project uses. Give the agent enough context to work within the codebase instead of guessing at its conventions. Avoid placing secrets, private customer records, or production credentials in prompts unless your organization has explicitly approved that use.
+
+## Break the work into reviewable steps
+
+For a React or Next.js feature, a reliable sequence is:
+
+1. Ask the agent to inspect the existing component and describe the relevant data flow.
+2. Agree on a small change with clear acceptance criteria.
+3. Have it implement the change using the project's established patterns.
+4. Review the diff, especially data access, error handling, and dependencies.
+5. Run the appropriate checks and exercise the feature yourself.
+
+Small changes are easier to verify and easier to undo. If the agent suggests a new package, check whether the project already has the necessary capability and whether the new dependency is maintained.
+
+## Review what the code actually does
+
+Generated code can look convincing while missing a boundary condition. For a form, try an empty submission, invalid data, a slow network response, and a failed request. For a slider, check keyboard navigation, touch behavior, links, and reduced-motion preferences. For authenticated features, verify authorization on the server rather than trusting a hidden button in the browser.
+
+Read the diff rather than relying on a summary. Pay particular attention to permissions, database queries, external requests, and any change that could expose private data. Ask the agent to explain unfamiliar code, then verify its explanation against the implementation and relevant documentation.
+
+## Verify the experience, not just the build
+
+A successful production build confirms that the application compiles; it does not prove a button works or that a page is accessible. Use the project's lint and test commands where available, then test the interaction in a browser. Resize the viewport, navigate with a keyboard, and check loading and error states.
+
+For performance-sensitive changes, compare real measurements before and after. A large animation library or an unnecessary client component can make a feature feel polished in a demo while slowing down the rest of the page.
+
+## Keep a human in the loop
+
+AI agents are useful collaborators for exploration, boilerplate, refactoring, and explaining unfamiliar code. They are less reliable when requirements are vague or when the cost of a mistake is high. Keep changes scoped, review them with the same care you would give a teammate's work, and retain human responsibility for security and release decisions.
+
+The goal is a faster path to a dependable website, not simply more code.`,
+  },
+  'ai-search-seo-website-discoverability-2026': {
+    content: `AI-powered search is changing how people discover websites. For a business owner, the practical question is simple: can search engines find your pages, understand what they offer, and trust that they help visitors?
+
+Google's [guidance for AI features](https://developers.google.com/search/docs/appearance/ai-features) says its existing SEO fundamentals also apply to AI Overviews and AI Mode. No special schema or AI-specific file is required for inclusion, and following best practices does not guarantee a mention. That makes a sound website a better starting point than chasing shortcuts.
+
+## Make every important page accessible
+
+Start with the basics: important pages need working URLs, internal links, and content that search engines can access. Check that robots.txt, authentication, and accidental noindex directives are not blocking pages you want indexed. Use Google Search Console to inspect representative URLs and investigate indexing issues.
+
+Give each page a descriptive title and a useful meta description. A service page should make its purpose clear to a potential customer: what you offer, who it is for, what the process looks like, and how to get in touch. Avoid creating multiple near-identical pages just to target slightly different keyword phrases.
+
+## Answer the question behind the search
+
+Someone searching for a website redesign may need to understand cost, timing, accessibility, and what happens after launch. A useful page addresses those questions in plain language, with specifics that match the service you actually provide.
+
+Use descriptive headings, concise explanations, and examples where they genuinely help. Support important claims with reliable sources, keep details current, and distinguish an estimate from a promise. Original insight and clear explanations give visitors a reason to use your page instead of returning immediately to search results.
+
+## Use structured data accurately
+
+Structured data can help search engines interpret eligible content, but it is not a magic switch for AI visibility. When you use it, choose a supported type that describes the visible page and keep its fields accurate. Do not add fabricated reviews, misleading ratings, or markup for content visitors cannot see.
+
+For Next.js projects, make sure page titles, descriptions, canonical URLs, and any structured data reflect the individual page. A blog article, project page, and service page each need content and metadata suited to their own purpose.
+
+## Make the page fast and easy to use
+
+Visitors need to read and interact with a site comfortably on mobile and desktop. Optimize images, reserve space for visual elements, reduce unnecessary JavaScript, and check keyboard navigation. Use [Core Web Vitals](https://web.dev/articles/vitals) to understand loading, responsiveness, and visual stability, and prioritize real user data where available.
+
+A good performance score alone will not earn a top ranking or an AI citation. It supports a better experience once someone finds your site.
+
+## Measure and improve
+
+Use Search Console to monitor indexing, queries, and changes in search traffic. Pair that with privacy-conscious analytics and business outcomes such as qualified inquiries or bookings. AI features and reporting change over time, so avoid assuming that every click or mention can be attributed to a single tactic.
+
+Review your most important pages regularly. Update outdated information, fix broken links, answer questions customers repeatedly ask, and make the next action obvious. Consistent improvements to genuinely useful pages are a durable foundation for both traditional search and AI-powered discovery.`,
+  },
   'react-best-practices-high-performance-components': {
     content: `React has become the go-to library for building interactive user interfaces. However, knowing how to write React code and writing performant React code are two different things. In this article, we'll explore essential best practices that will help you build high-performance, maintainable React applications.
 
@@ -777,23 +854,18 @@ export default function BlogPostPage({ params }) {
               ),
               li: ({ children }) => <li className="pl-2">{children}</li>,
               strong: ({ children }) => <strong className="font-semibold text-ink">{children}</strong>,
-              code: ({ className, children, ...props }) => {
-                const isBlock = className?.startsWith('language-');
+              code: ({ node, className, children, ...props }) => {
+                const isBlock = node?.position && node.position.start.line !== node.position.end.line;
 
-                return isBlock ? (
-                  <code
-                    className="block overflow-x-auto rounded-lg bg-surface-1 p-4 text-sm leading-6 text-ink"
-                    {...props}
-                  >
-                    {children}
-                  </code>
+                return isBlock || className?.startsWith('language-') ? (
+                  <code className={className} {...props}>{children}</code>
                 ) : (
                   <code className="rounded bg-surface-1 px-1.5 py-0.5 font-mono text-[0.9em] text-accent-blue" {...props}>
                     {children}
                   </code>
                 );
               },
-              pre: ({ children }) => <pre className="mb-6 overflow-x-auto">{children}</pre>,
+              pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
               a: ({ href, children }) => (
                 <a
                   href={href}
