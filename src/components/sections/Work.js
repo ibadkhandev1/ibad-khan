@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useRef } from 'react'
 import { gsap, useGSAP } from '@/lib/gsap'
 import { createLens } from '@/lib/lens'
-import { DESKTOP, FINE_POINTER, MOTION_OK } from '@/lib/motion-tokens'
+import { FINE_POINTER, MOTION_OK } from '@/lib/motion-tokens'
 import { PROJECTS } from '@/config/content'
 import SectionLabel from '@/components/layout/SectionLabel'
 import TransitionLink from '@/components/layout/TransitionLink'
@@ -32,6 +32,7 @@ function ProjectCard({ project, index }) {
               height={project.images.cover.height}
               sizes="(min-width: 1024px) 42vw, 92vw"
               className="work-cover"
+              draggable={false}
             />
             <div className="work-xray blueprint" data-work-xray aria-hidden="true">
               <ProjectArt index={index} letter={project.title[0]} variant="xray" />
@@ -55,67 +56,41 @@ function ProjectCard({ project, index }) {
   )
 }
 
-// The reveal beat: pinned and scrubbed sideways on desktop, a plain vertical
-// list on small screens and for reduced motion.
 export default function Work() {
   const rootRef = useRef(null)
   const trackRef = useRef(null)
-  const progressRef = useRef(null)
+  const dragRef = useRef({ active: false, startX: 0, startScroll: 0, moved: false })
+
+  const handlePointerDown = (event) => {
+    if (event.pointerType !== 'mouse') return
+    const track = trackRef.current
+    dragRef.current = { active: true, startX: event.clientX, startScroll: track.scrollLeft, moved: false }
+  }
+
+  const handlePointerMove = (event) => {
+    if (event.pointerType !== 'mouse') return
+    const track = trackRef.current
+    const drag = dragRef.current
+    if (!drag.active) return
+    const delta = event.clientX - drag.startX
+    if (Math.abs(delta) > 6) drag.moved = true
+    track.scrollLeft = drag.startScroll - delta
+  }
+
+  const handlePointerUp = (event) => {
+    if (event.pointerType !== 'mouse') return
+    dragRef.current.active = false
+  }
+
+  const handleClick = (event) => {
+    if (!dragRef.current.moved) return
+    event.preventDefault()
+    event.stopPropagation()
+    dragRef.current.moved = false
+  }
 
   useGSAP(() => {
     const mm = gsap.matchMedia()
-
-    mm.add(`${DESKTOP} and ${MOTION_OK}`, () => {
-      const track = trackRef.current
-      const arts = gsap.utils.toArray('[data-work-art]')
-      const distance = () => track.scrollWidth - document.documentElement.clientWidth
-      const skewTo = gsap.quickTo(arts, 'skewX', { duration: 0.5, ease: 'power3' })
-      const settle = gsap.delayedCall(0.12, () => skewTo(0)).pause()
-
-      const horizontal = gsap.to(track, {
-        x: () => -distance(),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: rootRef.current,
-          start: 'top top',
-          end: () => `+=${distance()}`,
-          pin: true,
-          scrub: 1,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            gsap.set(progressRef.current, { scaleX: self.progress })
-            skewTo(gsap.utils.clamp(-7, 7, self.getVelocity() / -350))
-            settle.restart(true)
-          },
-        },
-      })
-
-      gsap.utils.toArray('[data-work-card]').forEach((card) => {
-        const inner = card.querySelector('[data-work-art-inner]')
-        const isInFirstView = card.offsetLeft < window.innerWidth
-        gsap.from(inner, {
-          clipPath: 'inset(100% 0% 0% 0%)',
-          scale: 1.15,
-          clearProps: 'transform',
-          duration: 1.3,
-          scrollTrigger: isInFirstView
-            ? { trigger: rootRef.current, start: 'top 55%', once: true }
-            : { trigger: card, containerAnimation: horizontal, start: 'left 92%', once: true },
-        })
-      })
-    })
-
-    mm.add(`(max-width: 1023px) and ${MOTION_OK}`, () => {
-      gsap.utils.toArray('[data-work-art-inner]').forEach((inner) => {
-        gsap.from(inner, {
-          clipPath: 'inset(100% 0% 0% 0%)',
-          scale: 1.15,
-          clearProps: 'transform',
-          duration: 1.2,
-          scrollTrigger: { trigger: inner, start: 'top 88%', once: true },
-        })
-      })
-    })
 
     mm.add(`${FINE_POINTER} and ${MOTION_OK}`, () => {
       const cleanups = gsap.utils.toArray('[data-work-art]').map((art) => createLens({
@@ -142,13 +117,19 @@ export default function Work() {
               <span>{pad(PROJECTS.length)} builds</span>
               <span className="hidden lg:inline">Scroll →</span>
             </p>
-            <div className="mt-3 hidden h-px bg-hairline-strong lg:block">
-              <div ref={progressRef} className="h-full origin-left scale-x-0 bg-accent" />
-            </div>
           </div>
         </div>
 
-        <ul ref={trackRef} className="work-track gutter">
+        <ul
+          ref={trackRef}
+          className="work-track gutter"
+          aria-label="Selected work projects"
+          onPointerDownCapture={handlePointerDown}
+          onPointerMoveCapture={handlePointerMove}
+          onPointerUpCapture={handlePointerUp}
+          onPointerCancelCapture={handlePointerUp}
+          onClickCapture={handleClick}
+        >
           {PROJECTS.map((project, index) => (
             <ProjectCard key={project.slug} project={project} index={index} />
           ))}

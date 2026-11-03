@@ -706,13 +706,28 @@ body {
 
 .work-track {
   display: flex;
-  flex-direction: column;
-  gap: 4.5rem;
+  gap: 1.5rem;
+  overflow-x: auto;
   padding-block: 3.5rem 2rem;
+  scrollbar-width: none;
+  touch-action: pan-x pan-y;
+  cursor: grab;
+  user-select: none;
+  scroll-behavior: auto;
+  overscroll-behavior-x: contain;
+}
+
+.work-track::-webkit-scrollbar {
+  display: none;
+}
+
+.work-track:active {
+  cursor: grabbing;
 }
 
 .work-card {
   flex-shrink: 0;
+  width: min(88vw, 32rem);
 }
 
 .work-art {
@@ -727,6 +742,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  -webkit-user-drag: none;
 }
 
 .work-art-inner {
@@ -810,23 +826,12 @@ body {
 }
 
 @media (min-width: 1024px) {
-  .work-pin {
-    height: 100svh;
-    overflow: hidden;
-  }
-
   .work-track {
-    flex: 1;
-    flex-direction: row;
-    align-items: center;
     gap: clamp(2rem, 3vw, 3.5rem);
-    width: max-content;
-    padding-block: 2rem 0;
   }
 
   .work-card {
-    /* Landscape product cards; width capped so the 16:10 art fits the pinned viewport. */
-    width: min(42vw, 72svh, 44rem);
+    width: min(42vw, 44rem);
   }
 
   .work-card--end {
