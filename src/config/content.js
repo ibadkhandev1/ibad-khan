@@ -1,5 +1,5 @@
 export const LOCATION = {
-  city: 'Hyderabad',
+  city: 'Karachi',
   country: 'Pakistan',
   timeZone: 'Asia/Karachi',
   zoneLabel: 'PKT',
@@ -39,7 +39,7 @@ const PROJECT_DATA = [
     imageDir: 'horn',
     imageFiles: {
       cover: 'hone-cover-mockup.png',
-      desktop: ['hone-ritual.png', 'hone-babers-cut.vercel.app_ (5).png'],
+      desktop: ['hone-babers-cut.vercel.app_ (3).png', 'hone-babers-cut.vercel.app_ (5).png'],
       mobile: ['hone-mobile-home.png', 'hone-mobile-ritual.png'],
     },
   },
@@ -67,7 +67,7 @@ const IMAGE_SIZES = {
   'wobbly-mobile-home.png': { width: 1320, height: 2868 },
   'wobbly-mobile-case.png': { width: 1320, height: 2868 },
   'hone-cover-mockup.png': { width: 1536, height: 1024 },
-  'hone-ritual.png': { width: 3740, height: 2036 },
+  'hone-babers-cut.vercel.app_ (3).png': { width: 3740, height: 2036 },
   'hone-babers-cut.vercel.app_ (5).png': { width: 3740, height: 2036 },
   'hone-menu-screen.png': { width: 3740, height: 2036 },
   'hone-mobile-home.png': { width: 1320, height: 2868 },
@@ -104,15 +104,15 @@ export const getProject = (slug) => PROJECTS.find((project) => project.slug === 
 export const EXPERIENCES = [
   {
     company: 'Nanolix Digital',
-    role: 'Frontend Developer',
+    role: 'Full Stack Developer',
     type: 'Part-time · Remote',
     period: 'May 2025 — Present',
     points: [
-      'High-performance, SEO-first sites on the Next.js App Router and Headless WordPress',
-      'Modular React component architecture that scales across client builds',
-      'Lighthouse gains through image optimisation and lazy loading',
+      'Full-stack applications with Next.js, Node.js, MongoDB, and Headless WordPress',
+      'SaaS dashboards, role-based workflows, APIs, and reusable React architecture',
+      'CMS-powered websites and responsive product experiences built for growth',
     ],
-    skills: ['Next.js', 'React', 'WordPress REST API', 'Tailwind CSS', 'Swiper', 'React Hook Form'],
+    skills: ['Next.js', 'React', 'Node.js', 'MongoDB', 'WordPress', 'Tailwind CSS'],
   },
   {
     company: 'Techriv Solutions',
@@ -129,14 +129,15 @@ export const EXPERIENCES = [
 ]
 
 export const STACK_GROUPS = [
-  { title: 'Build', items: ['React', 'Next.js', 'JavaScript (ES6+)', 'HTML / CSS', 'Tailwind CSS', 'Bootstrap'] },
+  { title: 'Build', items: ['React', 'Next.js', 'Node.js', 'Express.js', 'MongoDB', 'Tailwind CSS'] },
   { title: 'Motion', items: ['GSAP', 'Motion', 'Lenis', 'WebGL (OGL)'] },
-  { title: 'Content', items: ['Headless WordPress', 'WordPress REST API', 'REST APIs', 'jQuery'] },
+  { title: 'Content', items: ['Headless WordPress', 'CMS Development', 'REST APIs', 'Supabase'] },
+  { title: 'Mobile', items: ['React Native', 'Expo', 'Android publishing', 'Mobile UI'] },
   { title: 'Craft', items: ['Responsive design', 'Web performance', 'Figma', 'Git'] },
 ]
 
-export const MARQUEE_PRIMARY = ['React', 'Next.js', 'JavaScript', 'Tailwind CSS', 'WordPress']
-export const MARQUEE_SECONDARY = ['GSAP', 'Motion', 'Lenis', 'WebGL', 'Performance', 'Figma']
+export const MARQUEE_PRIMARY = ['Next.js', 'React', 'Node.js', 'MongoDB', 'WordPress']
+export const MARQUEE_SECONDARY = ['React Native', 'CMS', 'SaaS', 'GSAP', 'Motion', 'Supabase']
 
 export const MENU_LINKS = [
   { label: 'Index', href: '/', note: 'Back to the top — go shuffle the hero.' },

@@ -43,7 +43,7 @@ export default function Stack() {
 
       <div
         data-stack-grid
-        className="gutter mt-20 grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-4"
+        className="gutter mt-20 grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-4 lg:grid-cols-5"
       >
         {STACK_GROUPS.map((group, groupIndex) => (
           <div key={group.title} className="border-t border-hairline-strong pt-4">

@@ -10,7 +10,7 @@ import Counter from '@/components/motion/Counter'
 const FACTS = [
   { label: 'Based in', value: `${LOCATION.city}, ${LOCATION.country}` },
   { label: 'Currently', value: 'Frontend at Nanolix Digital' },
-  { label: 'Focus', value: 'Next.js, motion, performance' },
+  { label: 'Focus', value: 'Next.js, MERN, CMS, mobile' },
 ]
 
 // The tension beat: a statement that resolves word by word as you scroll,

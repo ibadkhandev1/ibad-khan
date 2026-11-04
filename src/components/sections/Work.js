@@ -1,15 +1,12 @@
 'use client'
 
 import Image from 'next/image'
-import { useRef } from 'react'
-import { gsap, useGSAP } from '@/lib/gsap'
-import { createLens } from '@/lib/lens'
-import { FINE_POINTER, MOTION_OK } from '@/lib/motion-tokens'
+import { useEffect, useRef } from 'react'
+import { MOTION_OK } from '@/lib/motion-tokens'
 import { PROJECTS } from '@/config/content'
 import SectionLabel from '@/components/layout/SectionLabel'
 import TransitionLink from '@/components/layout/TransitionLink'
 import SplitReveal from '@/components/motion/SplitReveal'
-import ProjectArt from './ProjectArt'
 
 const pad = (value) => String(value).padStart(2, '0')
 
@@ -34,12 +31,6 @@ function ProjectCard({ project, index }) {
               className="work-cover"
               draggable={false}
             />
-            <div className="work-xray blueprint" data-work-xray aria-hidden="true">
-              <ProjectArt index={index} letter={project.title[0]} variant="xray" />
-              <ul className="work-spec">
-                {project.tech.map((tech) => <li key={tech}>{tech}</li>)}
-              </ul>
-            </div>
           </div>
         </div>
         <div className="mono-label mt-5 flex justify-between gap-4">
@@ -60,6 +51,48 @@ export default function Work() {
   const rootRef = useRef(null)
   const trackRef = useRef(null)
   const dragRef = useRef({ active: false, startX: 0, startScroll: 0, moved: false })
+  const autoScrollRef = useRef({ frame: null, direction: 1, position: 0 })
+
+  const stopAutoScroll = () => {
+    if (autoScrollRef.current.frame !== null) {
+      cancelAnimationFrame(autoScrollRef.current.frame)
+    }
+    autoScrollRef.current.frame = null
+  }
+
+  const startAutoScroll = (direction, event) => {
+    if (event?.pointerType === 'touch') return
+    if (!window.matchMedia(MOTION_OK).matches) return
+    stopAutoScroll()
+    autoScrollRef.current.direction = direction
+    autoScrollRef.current.position = trackRef.current?.scrollLeft ?? 0
+    const tick = () => {
+      const track = trackRef.current
+      if (!track) return
+      const maxScroll = track.scrollWidth - track.clientWidth
+      if (maxScroll <= 0) {
+        stopAutoScroll()
+        return
+      }
+      const nextScroll = autoScrollRef.current.position + autoScrollRef.current.direction * 2.2
+      autoScrollRef.current.position = nextScroll
+      if (nextScroll <= 0 || nextScroll >= maxScroll) {
+        track.scrollLeft = Math.max(0, Math.min(maxScroll, nextScroll))
+        stopAutoScroll()
+        return
+      }
+      track.scrollLeft = nextScroll
+      autoScrollRef.current.frame = requestAnimationFrame(tick)
+    }
+    autoScrollRef.current.frame = requestAnimationFrame(tick)
+  }
+
+  const nudgeScroll = (direction) => {
+    stopAutoScroll()
+    trackRef.current?.scrollBy({ left: direction * 240, behavior: 'smooth' })
+  }
+
+  useEffect(() => () => stopAutoScroll(), [])
 
   const handlePointerDown = (event) => {
     if (event.pointerType !== 'mouse') return
@@ -89,19 +122,6 @@ export default function Work() {
     dragRef.current.moved = false
   }
 
-  useGSAP(() => {
-    const mm = gsap.matchMedia()
-
-    mm.add(`${FINE_POINTER} and ${MOTION_OK}`, () => {
-      const cleanups = gsap.utils.toArray('[data-work-art]').map((art) => createLens({
-        surface: art,
-        layer: art.querySelector('[data-work-xray]'),
-        radius: () => Math.max(art.offsetWidth * 0.32, 90),
-      }))
-      return () => cleanups.forEach((cleanup) => cleanup())
-    })
-  }, { scope: rootRef })
-
   return (
     <section ref={rootRef} id="work" className="work" aria-labelledby="work-title">
       <div className="work-pin">
@@ -113,9 +133,40 @@ export default function Work() {
             </SplitReveal>
           </div>
           <div className="w-full max-w-xs lg:w-64">
-            <p className="mono-label flex justify-between">
+            <p className="mono-label flex items-center justify-between">
               <span>{pad(PROJECTS.length)} builds</span>
-              <span className="hidden lg:inline">Scroll →</span>
+              <span className="work-scroll-controls hidden lg:inline-flex" aria-label="Move selected work">
+                <button
+                  type="button"
+                  aria-label="Scroll projects left"
+                  onPointerEnter={(event) => startAutoScroll(-1, event)}
+                  onPointerLeave={stopAutoScroll}
+                  onMouseEnter={() => startAutoScroll(-1)}
+                  onMouseLeave={stopAutoScroll}
+                  onFocus={() => startAutoScroll(-1)}
+                  onBlur={stopAutoScroll}
+                  onClick={() => nudgeScroll(-1)}
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M19 12H5m6-6-6 6 6 6" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  aria-label="Scroll projects right"
+                  onPointerEnter={(event) => startAutoScroll(1, event)}
+                  onPointerLeave={stopAutoScroll}
+                  onMouseEnter={() => startAutoScroll(1)}
+                  onMouseLeave={stopAutoScroll}
+                  onFocus={() => startAutoScroll(1)}
+                  onBlur={stopAutoScroll}
+                  onClick={() => nudgeScroll(1)}
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12h14m-6-6 6 6-6 6" />
+                  </svg>
+                </button>
+              </span>
             </p>
           </div>
         </div>

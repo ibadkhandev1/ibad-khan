@@ -3,9 +3,9 @@ import { BASE_URL } from "@/app/constants";
 // Centralized personal information and social links
 export const PERSONAL_INFO = {
   name: 'Ibad Khan',
-  jobTitle: 'Frontend Developer',
+  jobTitle: 'Full Stack Developer | Next.js, MERN, CMS & Mobile Apps',
   description:
-    'Frontend developer building modern, performant web experiences with React, Next.js, and Tailwind CSS.',
+    'Full Stack Developer building web applications, CMS-powered websites, SaaS dashboards, and mobile apps with Next.js, MERN, WordPress, and React Native.',
   siteUrl: BASE_URL,
   email: 'ibadkhan.dev@gmail.com',
 };

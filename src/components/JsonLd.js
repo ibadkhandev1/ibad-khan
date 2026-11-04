@@ -19,11 +19,19 @@ export default function JsonLd() {
     knowsAbout: [
       'React',
       'Next.js',
+      'MERN Stack',
+      'Node.js',
+      'MongoDB',
+      'Headless WordPress',
+      'CMS Development',
+      'SaaS Development',
+      'React Native',
+      'Mobile App Development',
       'JavaScript',
       'Tailwind CSS',
       'Web Performance',
       'Responsive Design',
-      'Frontend Development',
+      'Full-Stack Development',
     ],
     location: {
       '@type': 'Place',
@@ -31,7 +39,7 @@ export default function JsonLd() {
         '@type': 'PostalAddress',
         addressCountry: 'PK',
         addressRegion: 'Sindh',
-        addressLocality: 'Hyderabad',
+        addressLocality: 'Karachi',
       },
     },
   };
@@ -39,7 +47,7 @@ export default function JsonLd() {
   const website = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Ibad Khan | Frontend Developer',
+    name: 'Ibad Khan | Full Stack Developer',
     url: PERSONAL_INFO.siteUrl,
     description: PERSONAL_INFO.description,
     creator: {

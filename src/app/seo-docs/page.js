@@ -61,7 +61,7 @@ export default function SeoDocumentation() {
               </li>
               <li>
                 <strong>Local SEO:</strong>
-                <p>Add structured data for local business information (Hyderabad)</p>
+                <p>Add structured data for local business information (Karachi)</p>
               </li>
             </ol>
           </section>

@@ -4,6 +4,8 @@ import SectionLabel from '@/components/layout/SectionLabel'
 import SplitReveal from '@/components/motion/SplitReveal'
 import ServiceList from './ServiceList'
 
+const FEATURED_SERVICES = SERVICES.slice(0, 4)
+
 export default function ServicesTeaser() {
   return (
     <section id="services" className="section" aria-labelledby="services-title">
@@ -18,12 +20,15 @@ export default function ServicesTeaser() {
               Ways I can help
             </SplitReveal>
           </div>
-          <Link href="/services" transitionLabel="Services" className="btn">
-            All services
-          </Link>
         </div>
         <div className="mt-16">
-          <ServiceList services={SERVICES} />
+          <ServiceList services={FEATURED_SERVICES} />
+          <div className="mt-10 flex justify-center">
+            <Link href="/services" transitionLabel="Services" className="btn">
+              Show all services
+              <span aria-hidden="true">↗</span>
+            </Link>
+          </div>
         </div>
       </div>
     </section>

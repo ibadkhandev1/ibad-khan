@@ -16,7 +16,7 @@ export const SEO_CONFIG = {
     'tailwind css developer',
     'web performance optimization',
   ],
-  location: 'Hyderabad',
+  location: 'Karachi',
   expertise: [
     'React.js',
     'Next.js',

@@ -197,7 +197,15 @@ export default async function ProjectPage({ params }) {
       >
         <span className="mono-label">Next project · {pad(PROJECTS.indexOf(next) + 1)}</span>
         <span className="project-next-row">
-          <span className="display project-next-title">{next.title}</span>
+          <span className="project-next-copy">
+            <span className="display project-next-title">{next.title}</span>
+            <span className="project-next-description">{next.description}</span>
+            <span className="project-next-stack" aria-label="Project technology stack">
+              {next.tech.map((tech) => (
+                <span key={tech} className="project-tag">{tech}</span>
+              ))}
+            </span>
+          </span>
           <span className="project-next-thumb">
             <Image
               src={next.images.cover.src}

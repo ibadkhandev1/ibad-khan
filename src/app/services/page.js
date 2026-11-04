@@ -5,16 +5,16 @@ import SplitReveal from '@/components/motion/SplitReveal'
 import ServiceList from '@/components/sections/ServiceList'
 import BookCallButton from '@/components/booking/BookCallButton'
 
-const TITLE = 'Frontend Development Services | Ibad Khan'
+const TITLE = 'Full Stack Development Services | Ibad Khan'
 const DESCRIPTION =
-  'React and Next.js development, responsive web design, website speed optimisation, GSAP '
-  + 'animation, headless WordPress and HTML email templates. Freelance, based in Pakistan.'
+  'Full-stack web applications, Next.js and MERN development, SaaS dashboards, mobile apps, '
+  + 'headless WordPress, and performance-focused frontend work. Based in Pakistan.'
 
 export const metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  keywords: ['frontend development services', 'freelance frontend developer',
-    'react developer', 'next.js developer', 'headless wordpress', 'website speed optimization'],
+  keywords: ['full stack development services', 'mern developer', 'next.js developer',
+    'react native developer', 'headless wordpress', 'saas dashboard development'],
   alternates: { canonical: `${BASE_URL}/services` },
   openGraph: {
     title: TITLE,
@@ -41,7 +41,7 @@ export default function ServicesPage() {
           What I can build for you
         </SplitReveal>
         <p className="lede mt-10">
-          I’m a frontend developer, so everything here is about the part of a website people
+          I’m a full stack developer, so I work across the interface, backend, CMS, and mobile layers.
           actually see and use. Pick the one closest to what you need. If you’re not sure,
           just write to me and describe the problem.
         </p>

@@ -1,6 +1,6 @@
 # Ibad Khan — Portfolio
 
-Personal site of Ibad Khan, frontend developer. Built around one idea: **design on the
+Personal site of Ibad Khan, full stack developer. Built around one idea: **design on the
 surface, engineering underneath.** A cursor lens reveals the blueprint (grid, outlined
 type, real CSS values) under the finished hero.
 
@@ -81,7 +81,7 @@ the Vercel project settings.
 
 ## Awwwards submission blurb
 
-**Title:** Ibad Khan — Frontend Developer
+**Title:** Ibad Khan — Full Stack Developer
 
 **Description:** A portfolio built on one idea: design on the surface, engineering
 underneath. An X-ray lens follows the cursor and reveals the blueprint of the page,

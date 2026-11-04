@@ -45,7 +45,7 @@ function HeroLayer({ variant }) {
         </div>
 
         <Name className="hero-name">
-          {!isXray && <span className="sr-only">Ibad Khan — frontend developer</span>}
+          {!isXray && <span className="sr-only">Ibad Khan — full stack developer</span>}
           {NAME_LINES.map((line, index) => (
             <span key={line} className={`hero-line hero-line-${index}`} aria-hidden="true">
               <span className="hero-line-inner">{line}</span>
@@ -72,7 +72,7 @@ function HeroLayer({ variant }) {
         <div className="mt-auto grid grid-cols-12 items-end gap-x-6 gap-y-6 pt-10">
           <p className="mono-label col-span-12 md:col-span-4" data-hero-fade="label">
             <span className={isXray ? 'xray-box' : ''}>
-              Frontend developer<br />
+              Full Stack Developer<br />
               {LOCATION.city}, {LOCATION.country} — working worldwide
             </span>
           </p>

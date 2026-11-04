@@ -32,10 +32,10 @@ const mono = JetBrains_Mono({
   display: 'swap',
 })
 
-const TITLE = 'Ibad Khan | Frontend Developer'
+const TITLE = 'Ibad Khan | Full Stack Developer'
 const DESCRIPTION =
-  'Frontend developer building modern, performant web experiences with React, Next.js, '
-  + 'and Tailwind CSS. Based in Hyderabad.'
+  'Full Stack Developer building web applications, CMS-powered websites, SaaS dashboards, '
+  + 'and mobile apps with Next.js, MERN, WordPress, and React Native. Based in Karachi.'
 const OG_IMAGE = `${BASE_URL}/featured-image.jpg`
 
 export const metadata = {
@@ -43,15 +43,18 @@ export const metadata = {
   title: TITLE,
   description: DESCRIPTION,
   keywords: [
-    'frontend developer',
-    'react developer',
-    'next.js',
+    'full stack developer',
+    'next.js developer',
+    'mern developer',
+    'cms developer',
+    'react native developer',
+    'mobile app developer',
     'creative developer',
     'gsap',
     'web developer',
     'portfolio',
     'ibad khan',
-    'hyderabad',
+    'karachi',
   ],
   authors: [{ name: 'Ibad Khan' }],
   creator: 'Ibad Khan',

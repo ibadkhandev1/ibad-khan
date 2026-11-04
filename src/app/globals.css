@@ -494,7 +494,6 @@ body {
 }
 
 .hero-xray-mask,
-.work-xray,
 .nf-xray {
   --lx: -9999px;
   --ly: -9999px;
@@ -725,6 +724,56 @@ body {
   cursor: grabbing;
 }
 
+.work-scroll-controls {
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--ink);
+}
+
+.work-scroll-controls button {
+  display: inline-grid;
+  width: 3.25rem;
+  height: 3.25rem;
+  place-items: center;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 50%;
+  line-height: 1;
+  transition:
+    background-color 0.4s var(--ease-soft),
+    border-color 0.4s var(--ease-soft),
+    color 0.4s var(--ease-soft),
+    transform 0.4s var(--ease-soft);
+}
+
+.work-scroll-controls svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+  transition: transform 0.5s var(--ease-soft);
+}
+
+.work-scroll-controls button:hover,
+.work-scroll-controls button:focus-visible {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--canvas);
+  transform: translateY(-0.15rem);
+}
+
+.work-scroll-controls button:first-child:hover svg,
+.work-scroll-controls button:first-child:focus-visible svg {
+  transform: translateX(-0.15rem);
+}
+
+.work-scroll-controls button:last-child:hover svg,
+.work-scroll-controls button:last-child:focus-visible svg {
+  transform: translateX(0.15rem);
+}
+
 .work-card {
   flex-shrink: 0;
   width: min(88vw, 32rem);
@@ -755,24 +804,6 @@ body {
   transform: scale(1.035);
 }
 
-.work-xray {
-  position: absolute;
-  inset: 0;
-}
-
-.work-spec {
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  display: grid;
-  gap: 0.2rem;
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
 .work-title {
   margin-top: 0.75rem;
   font-family: var(--font-display);
@@ -786,19 +817,6 @@ body {
 
 .work-card a:hover .work-title {
   color: var(--accent);
-}
-
-.project-letter {
-  font-family: var(--font-display);
-  font-size: 420px;
-  font-weight: 700;
-  font-stretch: 82%;
-}
-
-.project-anno {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
 }
 
 .work-more {
@@ -1616,6 +1634,14 @@ cal-floating-button {
   margin-top: 1.25rem;
 }
 
+.project-next-copy {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .project-next-title {
   font-size: clamp(3rem, 9vw, 8.5rem);
   transition: color 0.4s var(--ease-soft), transform 0.6s var(--ease-soft);
@@ -1625,6 +1651,21 @@ cal-floating-button {
 .project-next:focus-visible .project-next-title {
   color: var(--accent);
   transform: translateX(0.08em);
+}
+
+.project-next-description {
+  max-width: 56ch;
+  margin-top: 0.75rem;
+  color: var(--ink-muted);
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.6;
+}
+
+.project-next-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
 }
 
 .project-next-thumb {

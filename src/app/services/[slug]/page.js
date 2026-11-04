@@ -64,7 +64,7 @@ const buildJsonLd = (service) => {
         jobTitle: PERSONAL_INFO.jobTitle,
         url: BASE_URL,
         email: PERSONAL_INFO.email,
-        address: { '@type': 'PostalAddress', addressLocality: 'Hyderabad', addressCountry: 'PK' },
+        address: { '@type': 'PostalAddress', addressLocality: 'Karachi', addressCountry: 'PK' },
       },
     },
     {
