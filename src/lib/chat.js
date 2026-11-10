@@ -1,4 +1,5 @@
 import { PERSONAL_INFO } from '@/config/personal'
+import { CAL_LINK } from '@/lib/cal'
 
 export const CHAT_CONFIG = {
   title: 'Ask Ibad',
@@ -10,28 +11,27 @@ export const CHAT_CONFIG = {
     'Can you make my site faster?',
     'Are you available for freelance?',
   ],
+  errorReply: `I can’t reply right now. Email me at
+    [${PERSONAL_INFO.email}](mailto:${PERSONAL_INFO.email}) or
+    [book a call](https://cal.com/${CAL_LINK}) and I’ll get back to you.`.replace(/\s+/g, ' '),
 }
 
-const FALLBACK_REPLY = `The chat isn’t connected yet. For now, email me at
-  ${PERSONAL_INFO.email} or book a call and I’ll get back to you.`.replace(/\s+/g, ' ')
-
 /**
- * Integration point for the chat backend.
+ * Sends the conversation to the Gemini-backed route in app/api/ai-chat.
  *
  * Receives the full conversation as [{ role: 'user' | 'assistant', content }]
- * and must resolve to the assistant's reply as a string. Replace the body with
- * a call to your own API route, e.g.:
- *
- *   const response = await fetch('/api/chat', {
- *     method: 'POST',
- *     headers: { 'Content-Type': 'application/json' },
- *     body: JSON.stringify({ messages }),
- *   })
- *   if (!response.ok) throw new Error(`Chat API responded ${response.status}`)
- *   const { reply } = await response.json()
- *   return reply
+ * and resolves to the assistant's reply as a string. Throws when the route
+ * fails so the widget can show CHAT_CONFIG.errorReply.
  */
 export async function sendChatMessage(messages) {
-  await new Promise((resolve) => setTimeout(resolve, 700 + messages.length * 40))
-  return FALLBACK_REPLY
+  const response = await fetch('/api/ai-chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messages }),
+  })
+  const data = await response.json().catch(() => null)
+  if (!response.ok || !data?.reply) {
+    throw new Error(`Chat API responded ${response.status}: ${data?.error ?? 'no reply'}`)
+  }
+  return data.reply
 }

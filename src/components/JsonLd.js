@@ -1,21 +1,26 @@
-import { BASE_URL } from '@/app/constants';
-import { PERSONAL_INFO, SOCIAL_LINKS, ORGANIZATIONS } from '@/config/personal';
+import { BASE_URL } from '@/app/constants'
+import { PERSONAL_INFO, SOCIAL_LINKS, ORGANIZATIONS } from '@/config/personal'
 
+export const PERSON_ID = `${BASE_URL}/#person`
+export const WEBSITE_ID = `${BASE_URL}/#website`
+
+// Site-wide entity graph. The Person node is the one Google should match to
+// searches for "Ibad Khan"; sameAs links it to the LinkedIn/GitHub/Upwork profiles.
 export default function JsonLd() {
+  const socialProfiles = Object.values(SOCIAL_LINKS).filter((url) => url.startsWith('http'))
 
   const person = {
-    '@context': 'https://schema.org',
     '@type': 'Person',
+    '@id': PERSON_ID,
     name: PERSONAL_INFO.name,
+    alternateName: ['Ibad Khan Dev', 'ibadkhandev'],
     url: PERSONAL_INFO.siteUrl,
+    image: `${BASE_URL}/Professional-Headshot.png`,
     jobTitle: PERSONAL_INFO.jobTitle,
     description: PERSONAL_INFO.description,
     email: PERSONAL_INFO.email,
-    worksFor: ORGANIZATIONS.map((org) => ({
-      '@type': 'Organization',
-      name: org.name,
-    })),
-    sameAs: Object.values(SOCIAL_LINKS),
+    worksFor: ORGANIZATIONS.map((org) => ({ '@type': 'Organization', name: org.name })),
+    sameAs: socialProfiles,
     knowsAbout: [
       'React',
       'Next.js',
@@ -33,66 +38,30 @@ export default function JsonLd() {
       'Responsive Design',
       'Full-Stack Development',
     ],
-    location: {
-      '@type': 'Place',
-      address: {
-        '@type': 'PostalAddress',
-        addressCountry: 'PK',
-        addressRegion: 'Sindh',
-        addressLocality: 'Karachi',
-      },
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: 'PK',
+      addressRegion: 'Sindh',
+      addressLocality: 'Karachi',
     },
-  };
+  }
 
   const website = {
-    '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Ibad Khan | Full Stack Developer',
+    '@id': WEBSITE_ID,
+    name: 'Ibad Khan',
+    alternateName: ['Ibad Khan Dev', 'ibadkhandev', 'Ibad Khan Portfolio'],
     url: PERSONAL_INFO.siteUrl,
     description: PERSONAL_INFO.description,
-    creator: {
-      '@type': 'Person',
-      name: PERSONAL_INFO.name,
-    },
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${BASE_URL}/search?q={search_term_string}`,
-      },
-      'query-input': 'required name=search_term_string',
-    },
-  };
+    publisher: { '@id': PERSON_ID },
+  }
 
-  const organization = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: PERSONAL_INFO.name,
-    url: PERSONAL_INFO.siteUrl,
-    logo: `${BASE_URL}/logo.png`,
-    description: PERSONAL_INFO.description,
-    sameAs: Object.values(SOCIAL_LINKS),
-    contact: {
-      '@type': 'ContactPoint',
-      contactType: 'Customer Service',
-      email: PERSONAL_INFO.email,
-    },
-  };
+  const graph = { '@context': 'https://schema.org', '@graph': [person, website] }
 
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(person) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
-      />
-    </>
-  );
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }}
+    />
+  )
 }

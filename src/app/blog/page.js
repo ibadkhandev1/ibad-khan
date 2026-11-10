@@ -7,6 +7,7 @@ export const metadata = {
   description:
     'Read in-depth articles about React, Next.js, Tailwind CSS, web performance, and modern frontend development practices. Expert tips and tutorials.',
   keywords: ['blog', 'frontend', 'react', 'nextjs', 'web development', 'tutorials'],
+  alternates: { canonical: '/blog' },
   openGraph: {
     title: 'Blog - Ibad Khan | Frontend Development Articles',
     description: 'Expert articles on React, Next.js, and modern web development.',

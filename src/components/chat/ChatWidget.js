@@ -5,6 +5,7 @@ import { gsap, useGSAP } from '@/lib/gsap'
 import { REDUCED_MOTION } from '@/lib/motion-tokens'
 import { CHAT_CONFIG, sendChatMessage } from '@/lib/chat'
 import { openCalModal, preloadCal } from '@/lib/cal'
+import ChatMessageContent from '@/components/chat/ChatMessageContent'
 
 const createMessage = (role, content) => ({ id: crypto.randomUUID(), role, content })
 
@@ -96,7 +97,7 @@ export default function ChatWidget() {
       console.error('[ChatWidget]:', error)
       setMessages((current) => [
         ...current,
-        createMessage('assistant', 'Something went wrong sending that. Please try again.'),
+        createMessage('assistant', CHAT_CONFIG.errorReply),
       ])
     } finally {
       setIsSending(false)
@@ -140,7 +141,7 @@ export default function ChatWidget() {
         <ol ref={listRef} className="chat-messages" aria-live="polite" data-lenis-prevent>
           {messages.map((message) => (
             <li key={message.id} className="chat-message" data-role={message.role}>
-              {message.content}
+              <ChatMessageContent role={message.role} content={message.content} />
             </li>
           ))}
           {isSending && (

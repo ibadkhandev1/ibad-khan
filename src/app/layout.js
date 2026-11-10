@@ -32,11 +32,11 @@ const mono = JetBrains_Mono({
   display: 'swap',
 })
 
-const TITLE = 'Ibad Khan | Full Stack Developer'
+const TITLE = 'Ibad Khan — Full Stack Developer in Karachi'
 const DESCRIPTION =
-  'Full Stack Developer building web applications, CMS-powered websites, SaaS dashboards, '
-  + 'and mobile apps with Next.js, MERN, WordPress, and React Native. Based in Karachi.'
-const OG_IMAGE = `${BASE_URL}/featured-image.jpg`
+  'Ibad Khan is a full stack developer in Karachi building web applications, CMS-powered '
+  + 'websites, SaaS dashboards, and mobile apps with Next.js, MERN, WordPress, and React Native.'
+const OG_IMAGE = `${BASE_URL}/featured-image.webp`
 
 export const metadata = {
   metadataBase: new URL(BASE_URL),
@@ -57,7 +57,10 @@ export const metadata = {
     'karachi',
   ],
   authors: [{ name: 'Ibad Khan' }],
+  publisher: 'Ibad Khan',
   creator: 'Ibad Khan',
+  applicationName: 'Ibad Khan Portfolio',
+  category: 'technology',
   icons: { icon: '/ibad-fav.svg' },
   openGraph: {
     title: TITLE,
@@ -74,8 +77,19 @@ export const metadata = {
     description: DESCRIPTION,
     images: [OG_IMAGE],
   },
-  robots: { index: true, follow: true },
-  alternates: { canonical: BASE_URL },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+      'max-snippet': -1,
+    },
+  },
+  // No site-wide canonical here: child pages inherit it, so every page without its own
+  // canonical would tell Google it is a duplicate of the homepage. Each page sets its own.
 }
 
 export const viewport = {
