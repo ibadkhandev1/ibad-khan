@@ -21,7 +21,7 @@ export async function generateMetadata({ params }) {
   if (!service) return {}
 
   const url = `${BASE_URL}/services/${slug}`
-  const image = { url: `${BASE_URL}/featured-image.jpg`, alt: `${service.name} — Ibad Khan` }
+  const image = { url: `${BASE_URL}/featured-image.webp`, alt: `${service.name} — Ibad Khan` }
   return {
     title: service.metaTitle,
     description: service.metaDescription,

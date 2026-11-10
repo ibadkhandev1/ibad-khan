@@ -9,15 +9,15 @@ import { PERSON_ID, WEBSITE_ID } from '@/components/JsonLd'
 import { BASE_URL } from './constants'
 
 export const metadata = {
-  title: 'Ibad Khan — Full Stack Developer in Karachi',
+  title: 'Ibad Khan — Full Stack Developer',
   description:
-    'Ibad Khan is a full stack developer in Karachi building fast web applications, '
+    'Ibad Khan is a full stack developer building fast web applications, '
     + 'Next.js and MERN products, CMS websites, SaaS dashboards, and mobile apps.',
   alternates: { canonical: BASE_URL },
   openGraph: {
-    title: 'Ibad Khan — Full Stack Developer in Karachi',
+    title: 'Ibad Khan — Full Stack Developer',
     description:
-      'Portfolio of Ibad Khan, a full stack developer in Karachi specializing in Next.js, '
+      'Portfolio of Ibad Khan, a full stack developer specializing in Next.js, '
       + 'MERN, CMS websites, SaaS dashboards, and mobile apps.',
     url: BASE_URL,
     type: 'website',
@@ -30,7 +30,7 @@ const PROFILE_PAGE = {
   '@type': 'ProfilePage',
   '@id': `${BASE_URL}/#profilepage`,
   url: BASE_URL,
-  name: 'Ibad Khan — Full Stack Developer in Karachi',
+  name: 'Ibad Khan — Full Stack Developer',
   isPartOf: { '@id': WEBSITE_ID },
   mainEntity: { '@id': PERSON_ID },
 }

@@ -22,7 +22,7 @@ export const metadata = {
     url: `${BASE_URL}/services`,
     siteName: 'Ibad Khan Portfolio',
     type: 'website',
-    images: [{ url: `${BASE_URL}/featured-image.jpg`, alt: 'Ibad Khan — services' }],
+    images: [{ url: `${BASE_URL}/featured-image.webp`, alt: 'Ibad Khan — services' }],
   },
 }
 

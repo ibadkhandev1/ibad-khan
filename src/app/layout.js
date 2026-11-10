@@ -32,9 +32,9 @@ const mono = JetBrains_Mono({
   display: 'swap',
 })
 
-const TITLE = 'Ibad Khan — Full Stack Developer in Karachi'
+const TITLE = 'Ibad Khan — Full Stack Developer'
 const DESCRIPTION =
-  'Ibad Khan is a full stack developer in Karachi building web applications, CMS-powered '
+  'Ibad Khan is a full stack developer building web applications, CMS-powered '
   + 'websites, SaaS dashboards, and mobile apps with Next.js, MERN, WordPress, and React Native.'
 const OG_IMAGE = `${BASE_URL}/featured-image.webp`
 
@@ -54,7 +54,6 @@ export const metadata = {
     'web developer',
     'portfolio',
     'ibad khan',
-    'karachi',
   ],
   authors: [{ name: 'Ibad Khan' }],
   publisher: 'Ibad Khan',
